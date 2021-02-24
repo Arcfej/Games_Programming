@@ -338,3 +338,20 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/build/windows/codeblocks/GamesProgramming.cbp
+/build/windows/vs2017/GamesProgramming.vcxproj.filters
+/build/windows/vs2017/GamesProgramming.vcxproj
+/build/windows/vs2017/GamesProgramming.sln
+/build/windows/vs2017
+/build/windows/vs2015/GamesProgramming.vcxproj.filters
+/build/windows/vs2015/GamesProgramming.vcxproj
+/build/windows/vs2015/GamesProgramming.sln
+/build/windows/vs2015
+/build/windows/gmake/Makefile
+/build/windows/gmake/GamesProgramming.make
+/build/windows/gmake
+/build/windows/codelite/GamesProgramming.workspace
+/build/windows/codelite/GamesProgramming.project
+/build/windows/codelite
+/build/windows/codeblocks/GamesProgramming.workspace
+/build/windows/codeblocks

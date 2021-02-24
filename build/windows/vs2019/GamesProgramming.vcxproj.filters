@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{DCA10730-E281-4F40-8951-88C5FB1A8002}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Characters">
+      <UniqueIdentifier>{877A1CD4-E36B-5746-A51A-647FC8736AEF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\World">
+      <UniqueIdentifier>{F9ED3014-9F24-2642-BFAC-578EE041BEDC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\World\Normal">
+      <UniqueIdentifier>{E522B8FE-BA28-0440-9699-39F7F67EE16F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{33F6F820-3EA9-C347-BA01-1D2B43B2FDA7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Characters">
+      <UniqueIdentifier>{66B0422E-B5E3-EF49-98D0-DCE6D674FAD0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\nuklear">
+      <UniqueIdentifier>{9CBCD482-A246-F648-86B6-7B725E7291FF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Scroll">
+      <UniqueIdentifier>{6AA82764-D4BE-124A-B1C3-D1396411380E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\World">
+      <UniqueIdentifier>{E7223D6D-E9CC-ED4A-BF33-EAB7CEB7CB89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\World\Normal">
+      <UniqueIdentifier>{945F171B-ACA1-EB43-BA49-76D862AB2CF3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="inline">
+      <UniqueIdentifier>{6025450E-0099-624C-8492-0AE1FC5C1449}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="config">
+      <UniqueIdentifier>{6F11C263-6EA6-344B-9C9C-126A54EF458A}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\include\Scroll\Scroll.inl">
+      <Filter>inline</Filter>
+    </None>
+    <None Include="..\..\..\include\Scroll\ScrollBase.inl">
+      <Filter>inline</Filter>
+    </None>
+    <None Include="..\..\..\include\Scroll\ScrollEd.inl">
+      <Filter>inline</Filter>
+    </None>
+    <None Include="..\..\..\include\Scroll\ScrollObject.inl">
+      <Filter>inline</Filter>
+    </None>
+    <None Include="..\..\..\data\config\CreationTemplate.ini">
+      <Filter>config</Filter>
+    </None>
+    <None Include="..\..\..\data\config\GamesProgramming.ini">
+      <Filter>config</Filter>
+    </None>
+    <None Include="..\..\..\data\config\GamesProgrammingd.ini">
+      <Filter>config</Filter>
+    </None>
+    <None Include="..\..\..\data\config\GamesProgrammingp.ini">
+      <Filter>config</Filter>
+    </None>
+    <None Include="..\..\..\data\config\SettingsTemplate.ini">
+      <Filter>config</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\GamesProgramming.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Object.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\orxNuklear.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Characters\Character.h">
+      <Filter>include\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Characters\Player.h">
+      <Filter>include\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\nuklear\nuklear.h">
+      <Filter>include\nuklear</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Scroll\Scroll.h">
+      <Filter>include\Scroll</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Scroll\ScrollBase.h">
+      <Filter>include\Scroll</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Scroll\ScrollEd.h">
+      <Filter>include\Scroll</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Scroll\ScrollObject.h">
+      <Filter>include\Scroll</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\World\Disconnectible.h">
+      <Filter>include\World</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\World\Level.h">
+      <Filter>include\World</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\World\Node.h">
+      <Filter>include\World</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\World\Switch.h">
+      <Filter>include\World</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\World\Normal\Door.h">
+      <Filter>include\World\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\World\Normal\Obstacle.h">
+      <Filter>include\World\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\World\Normal\Path.h">
+      <Filter>include\World\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\World\Normal\Tile.h">
+      <Filter>include\World\Normal</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\GamesProgramming.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Object.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Characters\Character.cpp">
+      <Filter>src\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Characters\Player.cpp">
+      <Filter>src\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\World\Disconnectible.cpp">
+      <Filter>src\World</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\World\Level.cpp">
+      <Filter>src\World</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\World\Node.cpp">
+      <Filter>src\World</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\World\Switch.cpp">
+      <Filter>src\World</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\World\Normal\Door.cpp">
+      <Filter>src\World\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\World\Normal\Obstackle.cpp">
+      <Filter>src\World\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\World\Normal\Path.cpp">
+      <Filter>src\World\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\World\Normal\Tile.cpp">
+      <Filter>src\World\Normal</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
