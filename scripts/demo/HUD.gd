@@ -19,17 +19,12 @@ func show_main_menu():
 	$"VBoxContainer/Start Button".show()
 
 func update_score(score):
-	print("Full score: " + String(score))
 	var thousands = score / 1000
 	score -= thousands * 1000
-	print(String(thousands))
 	var hundreds = score / 100
 	score -= hundreds * 100
-	print(String(hundreds))
 	var tens = score / 10
 	score -= tens * 10
-	print(String(tens))
-	print(String(score))
 	$ScoreLabel.text = String(thousands) + String(hundreds) + String(tens) + String(score)
 
 
