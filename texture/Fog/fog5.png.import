@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Door1_pipo.png-e20fcce2708ad4aa7371b202e7128d95.stex"
+path="res://.import/fog5.png-e73ad65161ffdc2871254aa7d50aca45.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://animation/Door1_pipo.png"
-dest_files=[ "res://.import/Door1_pipo.png-e20fcce2708ad4aa7371b202e7128d95.stex" ]
+source_file="res://texture/Fog/fog5.png"
+dest_files=[ "res://.import/fog5.png-e73ad65161ffdc2871254aa7d50aca45.stex" ]
 
 [params]
 

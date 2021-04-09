@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/[A]Water_pipo.png-5785137f38688798d0101ba98a081d05.stex"
+path="res://.import/fog4.png-df2b56d886d2fd3dc3c9671a99e5dc4a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://animation/[A]Water_pipo.png"
-dest_files=[ "res://.import/[A]Water_pipo.png-5785137f38688798d0101ba98a081d05.stex" ]
+source_file="res://texture/Fog/fog4.png"
+dest_files=[ "res://.import/fog4.png-df2b56d886d2fd3dc3c9671a99e5dc4a.stex" ]
 
 [params]
 

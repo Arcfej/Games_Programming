@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Door2_pipo.png-feb1d90b92e1241bff3cad1716fbe4b5.stex"
+path="res://.import/map_effect1.png-eb147f6d2c4265ff92a2bad5aa8ad3ad.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://animation/Door2_pipo.png"
-dest_files=[ "res://.import/Door2_pipo.png-feb1d90b92e1241bff3cad1716fbe4b5.stex" ]
+source_file="res://texture/Effect/map_effect1.png"
+dest_files=[ "res://.import/map_effect1.png-eb147f6d2c4265ff92a2bad5aa8ad3ad.stex" ]
 
 [params]
 

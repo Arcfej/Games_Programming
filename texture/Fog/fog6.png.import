@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/fog4.png-50ba3060972c21f4a91ce687adb907f1.stex"
+path="res://.import/fog6.png-bd969e8a87ae4fef1147997d3ba45177.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://animation/Fog/fog4.png"
-dest_files=[ "res://.import/fog4.png-50ba3060972c21f4a91ce687adb907f1.stex" ]
+source_file="res://texture/Fog/fog6.png"
+dest_files=[ "res://.import/fog6.png-bd969e8a87ae4fef1147997d3ba45177.stex" ]
 
 [params]
 

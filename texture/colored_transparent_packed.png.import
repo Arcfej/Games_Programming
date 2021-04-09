@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/fog3.png-61387457e0b2b9f2244583881768d847.stex"
+path="res://.import/colored_transparent_packed.png-58214aef28bef18e5e848e4847931f12.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://animation/Fog/fog3.png"
-dest_files=[ "res://.import/fog3.png-61387457e0b2b9f2244583881768d847.stex" ]
+source_file="res://texture/colored_transparent_packed.png"
+dest_files=[ "res://.import/colored_transparent_packed.png-58214aef28bef18e5e848e4847931f12.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
