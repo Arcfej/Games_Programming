@@ -1,0 +1,34 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://texture/base.tres" type="TileSet" id=1]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="background" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 32, 32 )
+cell_custom_transform = Transform2D( 32, 0, 0, 32, 0, 0 )
+format = 1
+tile_data = PoolIntArray( 196609, 3, 3, 196610, 3, 3, 196611, 3, 3, 196612, 3, 3, 196613, 3, 3, 196614, 3, 3, 196615, 3, 3, 262145, 3, 3, 262146, 3, 3, 262147, 3, 3, 262148, 3, 3, 262149, 3, 3, 262150, 3, 3, 262151, 3, 3, 327681, 3, 3, 327682, 3, 3, 327683, 3, 3, 327684, 3, 3, 327685, 3, 3, 327686, 3, 3, 327687, 3, 3, 393217, 3, 3, 393218, 3, 3, 393219, 3, 131075, 393220, 3, 3, 393221, 3, 3, 393222, 3, 3, 393223, 3, 131075, 458753, 3, 3, 458754, 3, 3, 458755, 3, 3, 458756, 3, 3, 458757, 3, 3, 458758, 3, 131075, 458759, 3, 3, 524289, 3, 3, 524290, 3, 3, 524291, 3, 3, 524292, 3, 3, 524293, 3, 3, 524294, 3, 3, 524295, 3, 3 )
+
+[node name="floorDecoration" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 32, 32 )
+format = 1
+tile_data = PoolIntArray( 196609, 1610612753, 458759, 196611, 1610612753, 458760, 196612, 536870929, 458757, 196613, 536870929, 458757, 196614, 1610612753, 458759, 196615, 1610612753, 458760, 393220, 1610612753, 1310727, 524290, 1610612753, 1310726 )
+
+[node name="backgroundShadow" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 32, 32 )
+cell_custom_transform = Transform2D( 32, 0, 0, 32, 0, 0 )
+format = 1
+tile_data = PoolIntArray( 196609, 18, 65541, 196610, 18, 65541, 196611, 18, 65541, 196612, 18, 65541, 196613, 18, 65541, 196614, 18, 65541, 196615, 18, 65541, 262146, 19, 0, 262150, 19, 0, 327682, 19, 65537, 327686, 19, 65537, 327688, 18, 7, 393224, 18, 7 )
+
+[node name="shiftedBackgroundShadow" type="TileMap" parent="."]
+position = Vector2( 0, -10 )
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 32, 32 )
+cell_custom_transform = Transform2D( 32, 0, 0, 32, 0, 0 )
+cell_y_sort = true
+format = 1
+tile_data = PoolIntArray( 327688, 536870933, 131077 )
