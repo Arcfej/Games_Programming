@@ -16,7 +16,7 @@ func _deferred_change_map(path, player_position):
 	
 	# TODO optimize loading
 	current_map = load(path).instance()
-	get_tree().get_root().add_child(current_map)
+	get_tree().get_root().get_node("/root/Main/MapLayer").add_child(current_map)
 	get_tree().set_current_scene(current_map)
 	current_map.add_child(PPlayer)
 	
