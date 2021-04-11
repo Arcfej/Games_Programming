@@ -21,5 +21,12 @@ func _process(delta):
 		velocity = velocity.normalized() * speed
 	
 	position += velocity * delta
-	position.x = clamp(position.x, 0, screen_size.x)
-	position.y = clamp(position.y, 0, screen_size.y)
+	var parent_position = get_parent().get_position()
+	position.x = clamp(
+		position.x,
+		-parent_position.x,
+		screen_size.x - parent_position.x - $Sprite.texture.get_width())
+	position.y = clamp(
+		position.y,
+		-parent_position.y,
+		screen_size.y - parent_position.y - $Sprite.texture.get_height())
