@@ -25,8 +25,8 @@ func _process(delta):
 	position.x = clamp(
 		position.x,
 		-parent_position.x,
-		screen_size.x - parent_position.x - $Sprite.texture.get_width())
+		screen_size.x / get_tree().root.get_node("/root/Main/MapLayer").scale.x - parent_position.x - $Sprite.texture.get_width())
 	position.y = clamp(
 		position.y,
 		-parent_position.y,
-		screen_size.y - parent_position.y - $Sprite.texture.get_height())
+		screen_size.y / get_tree().root.get_node("/root/Main/MapLayer").scale.y - parent_position.y - $Sprite.texture.get_height())

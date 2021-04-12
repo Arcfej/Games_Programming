@@ -6,3 +6,5 @@
 script = ExtResource( 1 )
 
 [node name="MapLayer" type="CanvasLayer" parent="."]
+scale = Vector2( 3, 3 )
+transform = Transform2D( 3, 0, 0, 3, 0, 0 )
