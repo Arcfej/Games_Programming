@@ -1,6 +1,7 @@
 extends Area2D
 
-export var speed = 64
+export var speed = 50
+var movement_boundaries = Rect2(0, 0, 0, 0) setget set_movement_boundaries, get_movement_boundaries
 var screen_size
 
 func _ready():
@@ -20,13 +21,21 @@ func _process(delta):
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * speed
 	
-	position += velocity * delta
-	var parent_position = get_parent().get_position()
+	var new_position = velocity * delta
 	position.x = clamp(
-		position.x,
-		-parent_position.x,
-		screen_size.x / get_tree().root.get_node("/root/Main/MapLayer").scale.x - parent_position.x - $Sprite.texture.get_width())
+		position.x + new_position.x,
+		movement_boundaries.position.x,
+		movement_boundaries.end.x)
 	position.y = clamp(
-		position.y,
-		-parent_position.y,
-		screen_size.y / get_tree().root.get_node("/root/Main/MapLayer").scale.y - parent_position.y - $Sprite.texture.get_height())
+		position.y + new_position.y,
+		movement_boundaries.position.y,
+		movement_boundaries.end.y)
+
+func set_movement_boundaries(boundaries):
+	if boundaries is Rect2:
+		movement_boundaries = boundaries
+	else:
+		printerr("Movement boundaries not set by a Rect2 for player")
+
+func get_movement_boundaries():
+	return movement_boundaries
