@@ -29,5 +29,6 @@ tile_data = PoolIntArray( 65539, 11, 0 )
 
 [node name="Entrance_1" type="Area2D" parent="." instance=ExtResource( 4 )]
 position = Vector2( 62, 24 )
+scale = Vector2( 2, 2 )
 script = ExtResource( 3 )
 [connection signal="area_entered" from="Entrance_1" to="Entrance_1" method="_on_Entrance_area_entered"]
