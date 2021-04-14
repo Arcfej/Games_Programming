@@ -1,11 +1,9 @@
 extends Node2D
 class_name Map
 
-var entrances = [] setget , get_entrances
-#var player_position = Vector2(0, 0) setget set_player_position, get_player_position # Vector2
+var entrances = {} setget , get_entrances
 
 func _ready():
-	#PPlayer.position = player_position
 	pass
 
 func _process(delta):
@@ -14,12 +12,6 @@ func _process(delta):
 func get_entrances():
 	return entrances
 
-#func set_player_position(position):
-#	player_position = position
-
-#func get_player_position():
-#	return player_position
-
 func get_tile_by_position(position):
 	print(position)
 
@@ -27,7 +19,7 @@ func place_player(position):
 	if PPlayer.get_parent():
 		PPlayer.get_parent().remove_child(PPlayer)
 	add_child(PPlayer, true)
-	PPlayer.position = position * Global.tile_size
+	PPlayer.enter_map(position * Global.tile_size)
 
 func _set_player_movement_boundaries():
 	var boundaries = Rect2(PPlayer.position, Vector2(0, 0))

@@ -10,6 +10,14 @@ export var entrances = {
 	},
 	1 : {
 		map = "res://nodes/maps/P_L2.tscn",
+		destination = Vector2(0, 5)
+	},
+	2 : {
+		map = "res://nodes/maps/P_L1.tscn",
+		destination = Vector2(3, 1)
+	},
+	3: {
+		map = "res://nodes/maps/P_L3.tscn",
 		destination = Vector2(0, 0)
 	}
 }
@@ -27,6 +35,4 @@ func _deferred_change_map(path, player_position):
 	current_map = load(path).instance()
 	get_tree().get_root().get_node("/root/Main/MapLayer").add_child(current_map)
 	get_tree().set_current_scene(current_map)
-	current_map.place_player(player_position)
-	
 	current_map.place_player(player_position)

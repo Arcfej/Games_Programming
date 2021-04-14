@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://texture/prototype.tres" type="TileSet" id=1]
 [ext_resource path="res://scripts/maps/P_L1.gd" type="Script" id=2]
-[ext_resource path="res://scripts/Entrance.gd" type="Script" id=3]
 [ext_resource path="res://nodes/Entrance.tscn" type="PackedScene" id=4]
 
 [node name="Map" type="Node2D"]
@@ -27,8 +26,6 @@ cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
 format = 1
 tile_data = PoolIntArray( 65539, 11, 0 )
 
-[node name="Entrance_1" type="Area2D" parent="." instance=ExtResource( 4 )]
+[node name="Entrance_1" parent="." instance=ExtResource( 4 )]
 position = Vector2( 62, 24 )
 scale = Vector2( 2, 2 )
-script = ExtResource( 3 )
-[connection signal="area_entered" from="Entrance_1" to="Entrance_1" method="_on_Entrance_area_entered"]

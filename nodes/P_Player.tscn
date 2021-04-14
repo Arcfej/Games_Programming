@@ -23,3 +23,4 @@ shape = SubResource( 1 )
 self_modulate = Color( 0.105882, 0.878431, 0.137255, 1 )
 texture = SubResource( 2 )
 centered = false
+[connection signal="area_entered" from="." to="." method="_on_Player_area_entered"]
