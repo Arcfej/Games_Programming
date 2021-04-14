@@ -3,8 +3,19 @@ extends Node
 var current_map
 export var tile_size = 16
 
-func change_map(path, player_position):
-	call_deferred("_deferred_change_map", path, player_position)
+export var entrances = {
+	0 : {
+		map = "res://nodes/maps/P_L1.tscn",
+		destination = Vector2(0, 0)
+	},
+	1 : {
+		map = "res://nodes/maps/P_L2.tscn",
+		destination = Vector2(0, 0)
+	}
+}
+
+func entrance_reached(entrance_id):
+	call_deferred("_deferred_change_map", entrances[entrance_id]["map"], entrances[entrance_id]["destination"])
 
 func _deferred_change_map(path, player_position):
 	if PPlayer.get_parent():

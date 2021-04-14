@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://texture/prototype.tres" type="TileSet" id=1]
 [ext_resource path="res://scripts/maps/P_L1.gd" type="Script" id=2]
+[ext_resource path="res://scripts/Entrance.gd" type="Script" id=3]
+[ext_resource path="res://nodes/Entrance.tscn" type="PackedScene" id=4]
 
 [node name="Map" type="Node2D"]
 position = Vector2( 64, 64 )
@@ -11,16 +13,21 @@ __meta__ = {
 "_editor_description_": ""
 }
 
-[node name="background" type="TileMap" parent="."]
+[node name="Background" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
 format = 1
 tile_data = PoolIntArray( -1, 10, 0, -65536, 10, 2, -65535, 10, 0, -65534, 10, 2, -65533, 10, 0, 65535, 10, 0, 0, 2, 1, 1, 2, 3, 2, 2, 3, 3, 10, 0, 131071, 10, 0, 65536, 2, 2, 65537, 2, 0, 65538, 2, 0, 65539, 2, 2, 196607, 10, 0, 131072, 2, 2, 131073, 2, 3, 131074, 2, 2, 131075, 10, 0, 262143, 10, 0, 196608, 10, 0, 196609, 10, 0, 196610, 10, 0, 196611, 10, 0 )
 
-[node name="foreground" type="TileMap" parent="."]
+[node name="Foreground" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
 format = 1
 tile_data = PoolIntArray( 65539, 11, 0 )
+
+[node name="Entrance_1" type="Area2D" parent="." instance=ExtResource( 4 )]
+position = Vector2( 62, 24 )
+script = ExtResource( 3 )
+[connection signal="area_entered" from="Entrance_1" to="Entrance_1" method="_on_Entrance_area_entered"]

@@ -69,7 +69,7 @@ func _check_movement_at_position(tile_map, position):
 	var tile_id = tile_map.get_cellv(tile_map.world_to_map(position))
 	if tile_id == TileMap.INVALID_CELL: return true
 	var tile_name = tile_map.tile_set.tile_get_name(tile_id)
-	if tile_name.begins_with("path"):
+	if tile_name.begins_with("path") or tile_name == "door_opened":
 		allowed = true
 	elif tile_name == "door_closed":
 		allowed = false
