@@ -20,5 +20,6 @@ rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
+self_modulate = Color( 0.105882, 0.878431, 0.137255, 1 )
 texture = SubResource( 2 )
 centered = false

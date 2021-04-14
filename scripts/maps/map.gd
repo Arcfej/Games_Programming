@@ -35,19 +35,20 @@ func _set_player_movement_boundaries():
 	var right_allowed = true
 	var left_allowed = true
 	var down_allowed = true
+	# TODO fix up and left -1px movement boundary
 	for child in get_children():
 		if child is TileMap:
 			# Up
-			if !_check_movement_at_position(child, PPlayer.position + Vector2(0, -1)):
+			if !_check_movement_at_position(child, Vector2(PPlayer.position.x + (Global.tile_size - PPlayer.get_collision_shape().get_radius() * 2 - PPlayer.get_collision_shape().get_height()) / 2, PPlayer.position.y - PPlayer.get_collision_shape().get_radius() + PPlayer.get_collision_object().position.y) + Vector2(0, -1)):
 				up_allowed = false
 			# Right
-			if !_check_movement_at_position(child, PPlayer.position + Vector2(1, 0) * Global.tile_size):
+			if !_check_movement_at_position(child, Vector2(PPlayer.position.x + Global.tile_size / 2 + PPlayer.get_collision_shape().get_radius() + PPlayer.get_collision_shape().get_height() / 2, PPlayer.position.y + PPlayer.get_collision_shape().get_radius() + PPlayer.get_collision_object().position.y) + Vector2(1, 0)):
 				right_allowed = false
 			# Down
-			if !_check_movement_at_position(child, PPlayer.position + Vector2(0, 1) * Global.tile_size):
+			if !_check_movement_at_position(child, Vector2(PPlayer.position.x + Global.tile_size / 2 + PPlayer.get_collision_shape().get_radius() + PPlayer.get_collision_shape().get_height() / 2, PPlayer.position.y + PPlayer.get_collision_shape().get_radius() + PPlayer.get_collision_object().position.y) + Vector2(0, 1)):
 				down_allowed = false
 			# Left
-			if !_check_movement_at_position(child, PPlayer.position + Vector2(-1, 0)):
+			if !_check_movement_at_position(child, Vector2(PPlayer.position.x + (Global.tile_size - PPlayer.get_collision_shape().get_radius() * 2 - PPlayer.get_collision_shape().get_height()) / 2, PPlayer.position.y - PPlayer.get_collision_shape().get_radius() + PPlayer.get_collision_object().position.y) + Vector2(-1, 0)):
 				left_allowed = false
 				
 	if left_allowed:
@@ -60,7 +61,6 @@ func _set_player_movement_boundaries():
 		boundaries.end.x += Global.tile_size
 	if down_allowed:
 		boundaries.end.y += Global.tile_size
-	
 	
 	PPlayer.set_movement_boundaries(boundaries)
 

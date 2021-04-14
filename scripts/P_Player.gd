@@ -3,6 +3,8 @@ extends Area2D
 export var speed = 50
 var movement_boundaries = Rect2(0, 0, 0, 0) setget set_movement_boundaries, get_movement_boundaries
 var screen_size
+onready var collision_object = $CollisionShape2D setget , get_collision_object
+onready var collision_shape = collision_object.get_shape() setget , get_collision_shape
 
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -39,3 +41,9 @@ func set_movement_boundaries(boundaries):
 
 func get_movement_boundaries():
 	return movement_boundaries
+
+func get_collision_object():
+	return collision_object
+
+func get_collision_shape():
+	return collision_shape
