@@ -30,7 +30,6 @@ func _set_player_movement_boundaries():
 	var left_allowed = true
 	var down_allowed = true
 	
-	# TODO fix up and left -1px movement boundary
 	# Go through all the tile-map layers
 	for child in get_children():
 		if child is TileMap:
