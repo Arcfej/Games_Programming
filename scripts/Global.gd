@@ -58,6 +58,5 @@ func _deferred_change_map(path, player_position, is_2way_travel):
 	# TODO optimize loading
 	current_map = load(path).instance()
 	# Add the new map to Main/MapLayer then place the player on it
-	get_tree().get_root().get_node("/root/Main/MapLayer").add_child(current_map)
-	get_tree().set_current_scene(current_map)
+	get_tree().get_root().get_node("/root/Main").add_child(current_map)
 	current_map.place_player(player_position, is_2way_travel)

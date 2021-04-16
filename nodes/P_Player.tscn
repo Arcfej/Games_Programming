@@ -13,6 +13,9 @@ region = Rect2( 480, 48, 16, 16 )
 
 [node name="Player" type="Area2D"]
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 8, 13.875 )
@@ -23,4 +26,23 @@ shape = SubResource( 1 )
 self_modulate = Color( 0.105882, 0.878431, 0.137255, 1 )
 texture = SubResource( 2 )
 centered = false
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 8, 8 )
+current = true
+limit_left = -1000
+limit_top = -1000
+limit_right = 1000
+limit_bottom = 1000
+limit_smoothed = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = true
+smoothing_speed = 9.0
+drag_margin_left = 0.1
+drag_margin_top = 0.17
+drag_margin_right = 0.1
+drag_margin_bottom = 0.17
+editor_draw_limits = true
+editor_draw_drag_margin = true
 [connection signal="area_entered" from="." to="." method="_on_Player_area_entered"]
