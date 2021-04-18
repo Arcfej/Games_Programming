@@ -11,13 +11,10 @@ height = 6.75
 atlas = ExtResource( 1 )
 region = Rect2( 480, 48, 16, 16 )
 
-[node name="Player" type="Area2D"]
+[node name="Player" type="KinematicBody2D"]
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_group_": true
-}
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="KinematicCollision" type="CollisionShape2D" parent="."]
 position = Vector2( 8, 13.875 )
 rotation = 1.5708
 shape = SubResource( 1 )
@@ -45,4 +42,11 @@ drag_margin_right = 0.1
 drag_margin_bottom = 0.17
 editor_draw_limits = true
 editor_draw_drag_margin = true
-[connection signal="area_entered" from="." to="." method="_on_Player_area_entered"]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="AreaCollision" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 8, 13.875 )
+rotation = 1.5708
+shape = SubResource( 1 )
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
