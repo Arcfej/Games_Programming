@@ -33,7 +33,17 @@ export var entrances = {
 	},
 	3: {
 		map = "res://nodes/maps/P_L3.tscn",
-		destination = Vector2(0, 0),
+		destination = Vector2(5, 10),
+		is_2way = true
+	},
+	4: {
+		map = "res://nodes/maps/P_L2",
+		destination = Vector2(1, 0),
+		is_2way = true
+	},
+	5: {
+		map = "res://nodes/maps/P_L4",
+		destination = Vector2(9, 0),
 		is_2way = true
 	}
 }

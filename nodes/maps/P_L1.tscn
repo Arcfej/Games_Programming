@@ -40,4 +40,3 @@ tile_data = PoolIntArray( 65540, 13, 0 )
 
 [node name="Entrance1" parent="." instance=ExtResource( 4 )]
 position = Vector2( 62, 24 )
-scale = Vector2( 2, 2 )

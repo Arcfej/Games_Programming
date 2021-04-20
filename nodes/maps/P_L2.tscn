@@ -46,10 +46,8 @@ tile_data = PoolIntArray( -65535, 13, 0, 393215, 13, 0 )
 
 [node name="Entrance2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 2, 88 )
-scale = Vector2( 2, 2 )
 
 [node name="Entrance3" parent="." instance=ExtResource( 3 )]
 position = Vector2( 24, 2 )
 rotation = 1.5708
-scale = Vector2( 2, 2 )
 [connection signal="switch_doors" from="Foreground/Switch" to="." method="_on_Switch_switch_doors"]
