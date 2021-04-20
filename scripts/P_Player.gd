@@ -10,11 +10,17 @@ func _physics_process(delta):
 	# If the player just entered the map set up a oneshot signal
 	# when the player leaves the entrance it arrived at
 	if just_entered_map:
-		print($Area2D.get_overlapping_areas().size())
 		for area in $Area2D.get_overlapping_areas():
 			# Only connect the signal if it's not been set yet
 			if !$Area2D.is_connected("area_exited", self, "_on_Player_area_exited"):
 				$Area2D.connect("area_exited", self, "_on_Player_area_exited", [], CONNECT_ONESHOT)
+	
+	# Getting user input for 'action'
+	# TODO check interactives in all 4 directions and pop up a menu to chose if there are more than one
+	if Input.is_action_just_pressed("ui_accept"):
+		for body in $InteractiveArea.get_overlapping_bodies():
+			if body.is_in_group("interactive"):
+				body.interact_with()
 	
 	# TODO storing the last direction in an enum,
 	# so always react to new key-presses, not in the order of up-left-right-down

@@ -6,16 +6,18 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 8 )
 
-[node name="Door" type="StaticBody2D"]
+[node name="Door" type="StaticBody2D" groups=[
+"disconnectibles",
+"doors",
+]]
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="." groups=[
-"doors",
-]]
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = ExtResource( 1 )
+speed_scale = 20.0
 centered = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

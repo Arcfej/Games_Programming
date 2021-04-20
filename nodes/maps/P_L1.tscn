@@ -18,7 +18,7 @@ tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
 format = 1
-tile_data = PoolIntArray( -1, 10, 0, -65536, 10, 2, -65535, 10, 0, -65534, 10, 2, -65533, 10, 0, 65535, 10, 0, 0, 2, 1, 1, 2, 3, 2, 2, 3, 3, 10, 0, 131071, 10, 0, 65536, 2, 2, 65537, 2, 0, 65538, 2, 0, 65539, 2, 2, 196607, 10, 0, 131072, 2, 2, 131073, 2, 3, 131074, 2, 2, 131075, 10, 0, 262143, 10, 0, 196608, 10, 0, 196609, 10, 0, 196610, 10, 0, 196611, 10, 0 )
+tile_data = PoolIntArray( -1, 10, 0, -65536, 10, 2, -65535, 10, 0, -65534, 10, 2, -65533, 10, 0, 65535, 10, 0, 0, 2, 1, 1, 2, 3, 2, 2, 3, 3, 10, 0, 131071, 10, 0, 65536, 2, 2, 65537, 2, 1, 65538, 2, 0, 65539, 2, 3, 196607, 10, 0, 131072, 2, 2, 131073, 2, 3, 131074, 2, 2, 131075, 10, 0, 262143, 10, 0, 196608, 10, 0, 196609, 10, 0, 196610, 10, 0, 196611, 10, 0 )
 
 [node name="Foreground" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
@@ -38,6 +38,6 @@ cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
 format = 1
 tile_data = PoolIntArray( 65540, 13, 0 )
 
-[node name="Entrance_1" parent="." instance=ExtResource( 4 )]
+[node name="Entrance1" parent="." instance=ExtResource( 4 )]
 position = Vector2( 62, 24 )
 scale = Vector2( 2, 2 )

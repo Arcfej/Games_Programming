@@ -1,6 +1,8 @@
 # Global class for storing a lot of information
 extends Node
 
+# Layer 20: interactive
+
 # The currently visible map
 var current_map
 # The tile size of the maps

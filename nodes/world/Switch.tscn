@@ -22,7 +22,11 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 8, 8 )
 
-[node name="Switch" type="StaticBody2D"]
+[node name="Switch" type="StaticBody2D" groups=[
+"interactive",
+"switch",
+]]
+collision_layer = 524289
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
@@ -30,8 +34,10 @@ __meta__ = {
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 3 )
+speed_scale = 20.0
 centered = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 8, 8 )
 shape = SubResource( 4 )
+[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
