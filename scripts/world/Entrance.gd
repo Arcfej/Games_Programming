@@ -1,10 +1,7 @@
 extends Area2D
 class_name Entrance
 
-var id setget set_id, get_id
-
-func set_id(ID):
-	id = ID
+export var id = -1 setget , get_id
 
 func get_id():
 	return id

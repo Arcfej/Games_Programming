@@ -15,5 +15,4 @@ func _on_AnimatedSprite_animation_finished():
 func interact_with():
 	$AnimatedSprite.play("default", on_right)
 	on_right = !on_right
-	for door_id in connected_door_ids:
-		emit_signal("switch_doors", door_id)
+	emit_signal("switch_doors", connected_door_ids)

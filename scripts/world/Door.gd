@@ -18,10 +18,12 @@ func switch():
 func open():
 	$AnimatedSprite.play("default")
 	$CollisionShape2D.disabled = true
+	Global.disconnectibles[id]["is_connected"] = true
 
 func close():
 	$AnimatedSprite.play("default", true)
 	$CollisionShape2D.disabled = false
+	Global.disconnectibles[id]["is_connected"] = false
 
 # Play the animation only once
 func _on_AnimatedSprite_animation_finished():
@@ -30,3 +32,13 @@ func _on_AnimatedSprite_animation_finished():
 
 func get_id():
 	return id
+
+# Set the state of the door without animation
+func set_state(has_opened):
+	is_open = has_opened
+	if is_open:
+		$AnimatedSprite.frame = 1
+		$CollisionShape2D.disabled = true
+	else:
+		$AnimatedSprite.frame = 0
+		$CollisionShape2D.disabled = false

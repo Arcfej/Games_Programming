@@ -6,7 +6,11 @@ var exits = {} setget , get_exits
 var doors = {} setget , get_doors
 
 func _ready():
-	scale = Vector2(4, 4)
+	scale = Vector2(2, 2)
+	# Go through all the doors and load their saved state
+	for door in get_tree().get_nodes_in_group("doors"):
+		var is_open = Global.disconnectibles[door.get_id()]["is_connected"]
+		door.set_state(is_open)
 
 func get_exits():
 	return exits
@@ -20,7 +24,7 @@ func place_player(position, is_2way_travel):
 	if PPlayer.get_parent():
 		PPlayer.get_parent().remove_child(PPlayer)
 	add_child(PPlayer, true)
-	PPlayer.enter_map(position * Global.tile_size, is_2way_travel)
+	PPlayer.enter_map(position * Global.tile_size, is_2way_travel, scale)
 
 # If a switch is switched, change the state of the connected doors
 func _on_Switch_switch_doors(door_ids):

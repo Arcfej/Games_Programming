@@ -1,13 +1,12 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://scripts/maps/P_L2.gd" type="Script" id=1]
+[ext_resource path="res://scripts/maps/map.gd" type="Script" id=1]
 [ext_resource path="res://texture/prototype.tres" type="TileSet" id=2]
 [ext_resource path="res://nodes/world/Entrance.tscn" type="PackedScene" id=3]
 [ext_resource path="res://nodes/world/Door.tscn" type="PackedScene" id=4]
 [ext_resource path="res://nodes/world/Switch.tscn" type="PackedScene" id=5]
 
 [node name="Map" type="Node2D"]
-scale = Vector2( 4, 4 )
 script = ExtResource( 1 )
 
 [node name="Background" type="TileMap" parent="."]
@@ -24,13 +23,13 @@ cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
 format = 1
 
 [node name="Door2" parent="Foreground" instance=ExtResource( 4 )]
-position = Vector2( 16, 0 )
+position = Vector2( 0, 80 )
 id = 2
+is_open = true
 
 [node name="Door3" parent="Foreground" instance=ExtResource( 4 )]
-position = Vector2( 0, 80 )
+position = Vector2( 16, 0 )
 id = 3
-is_open = true
 
 [node name="Switch" parent="Foreground" instance=ExtResource( 5 )]
 position = Vector2( 48, 144 )
@@ -46,8 +45,10 @@ tile_data = PoolIntArray( -65535, 13, 0, 393215, 13, 0 )
 
 [node name="Entrance2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 2, 88 )
+id = 2
 
 [node name="Entrance3" parent="." instance=ExtResource( 3 )]
 position = Vector2( 24, 2 )
 rotation = 1.5708
+id = 3
 [connection signal="switch_doors" from="Foreground/Switch" to="." method="_on_Switch_switch_doors"]

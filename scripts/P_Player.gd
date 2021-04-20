@@ -1,7 +1,8 @@
 extends KinematicBody2D
 
+const BASE_SPEED = 30
 # The speed of the player
-export var speed = 128
+export var speed = BASE_SPEED
 # Indicatior if the player just placed on the map after it's been loaded.
 # If true, moving back to the previous map is disabled for two-directional entrances
 var just_entered_map = false
@@ -44,9 +45,10 @@ func _physics_process(delta):
 
 # Call when the player enters a new map.
 # Travelling back will be disabled temporarily till starting position is leaved
-func enter_map(new_position, is_through_2way_entrance):
+func enter_map(new_position, is_through_2way_entrance, scale):
 	position = new_position
 	just_entered_map = is_through_2way_entrance
+	speed = BASE_SPEED * scale.length()
 
 # Leaving an entrance if the starting position on the map is an entrance.
 # Reenable area detection
