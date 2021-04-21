@@ -7,7 +7,7 @@ extends Node
 # The currently visible map
 var current_map
 # The entrance the player used last
-export var last_entrance = 1
+export var last_entrance = 3
 # The tile size of the maps
 export var tile_size = 16
 
@@ -108,13 +108,13 @@ var disconnectibles = {
 }
 
 # Loads a new map when the entrance is usedl
-func entrance_reached(entrance_id):
+func entrance_reached(entrance_id : int):
 	call_deferred("_deferred_change_map", entrance_id)
 
 # Inner function for deferred loading of the new map.
 # It should be called only with `call_deferred()`
 # Inputs: the path of the map's file and the position to place the player on after loading
-func _deferred_change_map(entrance_id):
+func _deferred_change_map(entrance_id : int):
 	# Remove the player from the old map if there's any
 	if PPlayer.get_parent():
 		PPlayer.get_parent().remove_child(PPlayer)

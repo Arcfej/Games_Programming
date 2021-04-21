@@ -1,7 +1,7 @@
 extends StaticBody2D
 class_name Door
 
-export (int) var id = -1 setget , get_id
+export (int) var id setget , get_id
 export var is_open = false
 var in_change = false
 
@@ -30,11 +30,11 @@ func _on_AnimatedSprite_animation_finished():
 	is_open = !is_open
 	$AnimatedSprite.stop()
 
-func get_id():
+func get_id() -> int:
 	return id
 
 # Set the state of the door without animation
-func set_state(has_opened):
+func set_state(has_opened: bool):
 	is_open = has_opened
 	if is_open:
 		$AnimatedSprite.frame = 1
