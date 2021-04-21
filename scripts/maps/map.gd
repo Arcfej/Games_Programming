@@ -2,7 +2,7 @@ extends Node2D
 class_name Map
 
 func _ready():
-	scale = Vector2(3, 3)
+	scale = Vector2(4, 4)
 	# Go through all the doors and load their saved state
 	for door in get_tree().get_nodes_in_group("doors"):
 		var is_open = Global.disconnectibles[door.get_id()]["is_connected"]

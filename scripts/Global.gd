@@ -2,7 +2,8 @@
 extends Node
 
 # LAYERS:
-# Layer 20: interactives
+# Layer 1:	for physical collisions and area detections
+# Layer 20:	for interacting with Nodes in the world
 
 # The currently visible map
 var current_map
