@@ -11,6 +11,8 @@ var current_map
 export var last_entrance = 3
 # The tile size of the maps
 export var tile_size = 16
+# The scale applied to the maps
+export(Vector2) var map_scale = Vector2(3, 3)
 
 # Entrances on the map. 
 # Each entrances identified by an id.

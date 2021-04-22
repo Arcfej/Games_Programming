@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://texture/prototype.tres" type="TileSet" id=1]
-[ext_resource path="res://scripts/maps/map.gd" type="Script" id=2]
+[ext_resource path="res://scripts/maps/P_L3.gd" type="Script" id=2]
 [ext_resource path="res://nodes/world/Entrance.tscn" type="PackedScene" id=3]
 [ext_resource path="res://nodes/world/Door.tscn" type="PackedScene" id=4]
 [ext_resource path="res://nodes/Guard.tscn" type="PackedScene" id=5]
@@ -61,7 +61,8 @@ id = 11
 position = Vector2( 144, 80 )
 seeing_distance = 4
 seeing_angle = 90
-seeing_direction = Vector2( -1, 0 )
+seeing_direction = Vector2( 1, 0 )
+state = 1
 
 [node name="InvisibleObstacles" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
