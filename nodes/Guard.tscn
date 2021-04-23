@@ -16,6 +16,8 @@ height = 10.0
 "guards",
 ]]
 script = ExtResource( 2 )
+seeing_distance = 5
+seeing_angle = 90
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = SubResource( 1 )

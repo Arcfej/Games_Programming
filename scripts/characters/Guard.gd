@@ -34,8 +34,7 @@ func _physics_process(delta):
 	# TODO delete update() after testing
 	update()
 	# If the player in seeing distance check further
-	# + 1 to match to the visible distance measured by tiles
-	if enemy_to_player.length() <= (seeing_distance + 1) * Global.tile_size:
+	if enemy_to_player.length() <= seeing_distance * Global.tile_size:
 		# Check if the player is in the guard's angle of vision
 		if abs(rad2deg(enemy_to_player.angle_to(seeing_direction.normalized()))) < seeing_angle / 2:
 			# TODO improve raycasting by casting it as a tangent vector instead of to the middle
@@ -86,7 +85,7 @@ func patrol(delta):
 func _draw():
 	# For debugging, making the guard's vision visible
 	var from = Vector2(Global.tile_size / 2, Global.tile_size / 2)
-	draw_line(from, seeing_direction * (seeing_distance + 1) * Global.tile_size + from, Color.yellow, 1)
-	draw_line(from, seeing_direction.rotated(deg2rad(seeing_angle / 2)) * (seeing_distance + 1) * Global.tile_size + from, Color.yellow, 1)
-	draw_line(from, seeing_direction.rotated(-deg2rad(seeing_angle / 2)) * (seeing_distance + 1) * Global.tile_size + from, Color.yellow, 1)
-	draw_line(from, to_local(PPlayer.global_position) + from, Color.red, 1.5)
+	draw_line(from, seeing_direction * seeing_distance * Global.tile_size + from, Color.yellow, 1)
+	draw_line(from, seeing_direction.rotated(deg2rad(seeing_angle / 2)) * seeing_distance * Global.tile_size + from, Color.yellow, 1)
+	draw_line(from, seeing_direction.rotated(-deg2rad(seeing_angle / 2)) * seeing_distance * Global.tile_size + from, Color.yellow, 1)
+	draw_line(from, to_local(PPlayer.global_position) + from, Color.red, 1)
