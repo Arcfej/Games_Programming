@@ -8,7 +8,7 @@ extends Node
 # The currently visible map
 var current_map
 # The entrance the player used last
-export var last_entrance = 3
+export var last_entrance = 5
 # The tile size of the maps
 export var tile_size = 16
 # The scale applied to the maps
