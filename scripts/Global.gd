@@ -50,7 +50,17 @@ var entrances = {
 	},
 	5: {
 		map = "res://nodes/maps/P_L4.tscn",
-		destination = Vector2(9, 0),
+		destination = Vector2(8, 8),
+		is_2way = true
+	},
+	6: {
+		map = "res://nodes/maps/P_L3.tscn",
+		destination = Vector2(5, 0),
+		is_2way = true
+	},
+	7: {
+		map = "res://nodes/maps/P_L5.tscn",
+		destination = Vector2(0, 0),
 		is_2way = true
 	}
 }
@@ -107,6 +117,22 @@ var disconnectibles = {
 	11: {
 		type = Disconnectible.Door,
 		is_connected = false
+	},
+	12: {
+		type = Disconnectible.Door,
+		is_connected = true
+	},
+	13: {
+		type = Disconnectible.Door,
+		is_connected = true
+	},
+	14: {
+		type = Disconnectible.Door,
+		is_connected = false
+	},
+	15: {
+		type = Disconnectible.Door,
+		is_connected = true
 	}
 }
 
