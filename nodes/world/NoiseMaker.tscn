@@ -10,7 +10,11 @@ region = Rect2( 560, 336, 16, 16 )
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 8, 8 )
 
-[node name="NoiseMaker" type="StaticBody2D"]
+[node name="NoiseMaker" type="StaticBody2D" groups=[
+"interactive",
+"noise_maker",
+]]
+collision_layer = 524289
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
@@ -20,9 +24,6 @@ __meta__ = {
 texture = SubResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=[
-"interactive",
-"noise_maker",
-]]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 8, 8 )
 shape = SubResource( 2 )

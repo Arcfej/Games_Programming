@@ -24,3 +24,9 @@ func _on_Switch_switch_doors(door_ids: Array):
 		for door in get_tree().get_nodes_in_group("doors"):
 			if id == door.get_id():
 				door.switch()
+
+func _on_NoiseMaker_noise(location: Vector2, distance: int):
+	for listener in get_tree().get_nodes_in_group("listener"):
+		print((PPlayer.position - listener.position).length() / Global.tile_size)
+		if listener is Guard and (PPlayer.position - listener.position).length() / Global.tile_size < distance:
+			listener.make_alert(location)

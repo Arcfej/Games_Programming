@@ -1,4 +1,5 @@
 extends KinematicBody2D
+class_name Guard
 
 enum State {IDLE, PATROLING, ALERT}
 
@@ -24,9 +25,14 @@ var patroling_state = Movement.Type.MOVE
 # Measure time-based movements
 var patroling_timer = 0
 
+var to_investigate: Vector2
+
 func _ready():
 	# Don't allow to collide with self
 	$RayCast2D.add_exception(self)
+
+func _process(delta):
+	$Alert.visible = true if state == State.ALERT else false
 
 func _physics_process(delta):
 	# Check if guard can see player
@@ -81,6 +87,10 @@ func patrol(delta):
 	
 	# Check if the route is ended, then start the patrol again from the beginning
 	if route_index >= route.size(): route_index = 0
+
+func make_alert(location: Vector2):
+	state = State.ALERT
+	to_investigate = location
 
 func _draw():
 	# For debugging, making the guard's vision visible
