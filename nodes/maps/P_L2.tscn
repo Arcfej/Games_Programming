@@ -35,20 +35,13 @@ id = 3
 position = Vector2( 48, 144 )
 connected_door_ids = [ 3 ]
 
-[node name="InvisibleObstacles" type="TileMap" parent="."]
-position = Vector2( 0, 0.25 )
-tile_set = ExtResource( 2 )
-cell_size = Vector2( 16, 16 )
-cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
-format = 1
-tile_data = PoolIntArray( -65535, 13, 0, 393215, 13, 0 )
-
 [node name="Entrance2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 2, 88 )
+position = Vector2( -2, 88 )
 id = 2
 
 [node name="Entrance3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 24, 2 )
+position = Vector2( 24, -2 )
 rotation = 1.5708
 id = 3
+
 [connection signal="switch_doors" from="Foreground/Switch" to="." method="_on_Switch_switch_doors"]

@@ -9,7 +9,7 @@ region = Rect2( 416, 48, 16, 16 )
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 2.0
-height = 10.0
+height = 8.0
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 1 )
@@ -41,7 +41,6 @@ cast_to = Vector2( 0, 0 )
 collide_with_areas = true
 
 [node name="Alert" type="Sprite" parent="."]
-visible = false
 self_modulate = Color( 0.988235, 0, 0, 1 )
 show_behind_parent = true
 position = Vector2( 8, -4 )

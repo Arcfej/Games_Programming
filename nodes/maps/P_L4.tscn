@@ -40,7 +40,6 @@ id = 14
 [node name="Door15" parent="Foreground" instance=ExtResource( 1 )]
 position = Vector2( 64, 96 )
 id = 15
-is_open = true
 
 [node name="Guard" parent="Foreground" instance=ExtResource( 2 )]
 position = Vector2( 176, 0 )
@@ -49,22 +48,17 @@ seeing_direction = Vector2( 0, 1 )
 
 [node name="NoiseMaker" parent="Foreground" instance=ExtResource( 6 )]
 position = Vector2( 48, 80 )
-hearing_distance = 15
 
-[node name="InvisibleObstacles" type="TileMap" parent="."]
-tile_set = ExtResource( 3 )
-cell_size = Vector2( 16, 16 )
-cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
-format = 1
-tile_data = PoolIntArray( -65525, 13, 0, 589832, 13, 0 )
+[node name="Line2D" type="Line2D" parent="Foreground"]
+width = 1.0
 
 [node name="Entrance6" parent="." instance=ExtResource( 4 )]
-position = Vector2( 184, 2 )
+position = Vector2( 136, 146 )
 rotation = 1.5708
 id = 6
 
 [node name="Entrance7" parent="." instance=ExtResource( 4 )]
-position = Vector2( 136, 142 )
+position = Vector2( 184, 2 )
 rotation = 1.5708
 id = 7
 

@@ -26,42 +26,34 @@ var entrances = {
 	0 : {
 		map = "res://nodes/maps/P_L1.tscn",
 		destination = Vector2(0, 0),
-		is_2way = false
 	},
 	1 : {
 		map = "res://nodes/maps/P_L2.tscn",
 		destination = Vector2(0, 5),
-		is_2way = true
 	},
 	2 : {
 		map = "res://nodes/maps/P_L1.tscn",
 		destination = Vector2(3, 1),
-		is_2way = true
 	},
 	3: {
 		map = "res://nodes/maps/P_L3.tscn",
 		destination = Vector2(5, 10),
-		is_2way = true
 	},
 	4: {
 		map = "res://nodes/maps/P_L2.tscn",
 		destination = Vector2(1, 0),
-		is_2way = true
 	},
 	5: {
 		map = "res://nodes/maps/P_L4.tscn",
 		destination = Vector2(8, 8),
-		is_2way = true
 	},
 	6: {
 		map = "res://nodes/maps/P_L3.tscn",
 		destination = Vector2(5, 0),
-		is_2way = true
 	},
 	7: {
 		map = "res://nodes/maps/P_L5.tscn",
 		destination = Vector2(0, 0),
-		is_2way = true
 	}
 }
 
@@ -158,4 +150,4 @@ func _deferred_change_map(entrance_id : int):
 		last_entrance = entrances[entrance_id]
 		# Add the new map to Main/MapLayer then place the player on it
 		get_tree().get_root().get_node("/root/Main").add_child(current_map)
-		current_map.place_player(last_entrance["destination"], last_entrance["is_2way"])
+		current_map.place_player(last_entrance["destination"])

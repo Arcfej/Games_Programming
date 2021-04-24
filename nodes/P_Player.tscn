@@ -5,28 +5,29 @@
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 2.0
-height = 10.0
+height = 6.0
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 1 )
 region = Rect2( 480, 48, 16, 16 )
 
-[sub_resource type="CircleShape2D" id=5]
+[sub_resource type="CircleShape2D" id=3]
 radius = 7.0
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 12, 12 )
+extents = Vector2( 11, 11 )
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 2 )
 
 [node name="KinematicCollisionShape" type="CollisionShape2D" parent="."]
-position = Vector2( 8, 14 )
+position = Vector2( 8, 13 )
 rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 self_modulate = Color( 0.105882, 0.878431, 0.137255, 1 )
+position = Vector2( 0, -1 )
 texture = SubResource( 2 )
 centered = false
 
@@ -52,14 +53,16 @@ editor_draw_drag_margin = true
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="AreaCollisionShape" type="CollisionShape2D" parent="Area2D"]
-position = Vector2( 8, 9 )
-shape = SubResource( 5 )
+position = Vector2( 8, 8 )
+shape = SubResource( 3 )
 
 [node name="InteractiveArea" type="Area2D" parent="."]
+position = Vector2( 0, 1 )
 collision_layer = 524288
 collision_mask = 524288
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractiveArea"]
-position = Vector2( 8, 8 )
+position = Vector2( 8, 7 )
 shape = SubResource( 4 )
+
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]

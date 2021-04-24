@@ -2,19 +2,8 @@ extends KinematicBody2D
 
 # The base speed of the player
 const BASE_SPEED = 30
-# Indicatior if the player just placed on the map after it's been loaded.
-# If true, moving back to the previous map is disabled for two-directional entrances
-var just_entered_map = false
 
 func _physics_process(delta):
-	# If the player just entered the map set up a oneshot signal
-	# when the player leaves the entrance it arrived at
-	if just_entered_map:
-		for area in $Area2D.get_overlapping_areas():
-			# Only connect the signal if it's not been set yet
-			if !$Area2D.is_connected("area_exited", self, "_on_Player_area_exited"):
-				$Area2D.connect("area_exited", self, "_on_Player_area_exited", [], CONNECT_ONESHOT)
-	
 	# Getting user input for 'action'
 	# TODO check interactives in all 4 directions and pop up a menu to chose if there are more than one
 	if Input.is_action_just_pressed("ui_accept"):
@@ -43,19 +32,10 @@ func _physics_process(delta):
 	move_and_collide(velocity * delta, false)
 
 # Call when the player enters a new map.
-# Travelling back will be disabled temporarily till starting position is leaved
-func enter_map(new_position : Vector2, is_through_2way_entrance : bool):
+func enter_map(new_position : Vector2):
 	position = new_position
-	just_entered_map = is_through_2way_entrance
-
-# Leaving an entrance if the starting position on the map is an entrance.
-# Reenable area detection
-func _on_Player_area_exited(area):
-	if area is Entrance:
-		just_entered_map = false
 
 # Area collision checks
 func _on_Area2D_area_entered(area):
-	if just_entered_map: return
 	if area is Entrance:
 		Global.entrance_reached(area.get_id())
