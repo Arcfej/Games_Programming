@@ -9,6 +9,7 @@
 
 [node name="Map" type="Node2D"]
 script = ExtResource( 5 )
+need_navigation = true
 
 [node name="Background" type="TileMap" parent="."]
 tile_set = ExtResource( 3 )
@@ -41,16 +42,13 @@ id = 14
 position = Vector2( 64, 96 )
 id = 15
 
+[node name="NoiseMaker" parent="Foreground" instance=ExtResource( 6 )]
+position = Vector2( 48, 80 )
+
 [node name="Guard" parent="Foreground" instance=ExtResource( 2 )]
 position = Vector2( 176, 0 )
 seeing_distance = 7
 seeing_direction = Vector2( 0, 1 )
-
-[node name="NoiseMaker" parent="Foreground" instance=ExtResource( 6 )]
-position = Vector2( 48, 80 )
-
-[node name="Line2D" type="Line2D" parent="Foreground"]
-width = 1.0
 
 [node name="Entrance6" parent="." instance=ExtResource( 4 )]
 position = Vector2( 136, 146 )

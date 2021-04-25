@@ -3,7 +3,6 @@ class_name Door
 
 export (int) var id setget , get_id
 export var is_open = false
-var in_change = false
 
 func _ready():
 	$AnimatedSprite.frame = 1 if is_open else 0
