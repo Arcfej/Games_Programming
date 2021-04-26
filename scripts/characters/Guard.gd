@@ -4,11 +4,11 @@ class_name Guard
 enum State {IDLE, PATROLING, ALERT}
 
 # Seeing distance in tiles
-export(int) var seeing_distance
+export(int) var seeing_distance: int
 # Seeing angle in degree (180 means the guard can see everything in the front and both sides
-export(int, EXP, 0, 90) var seeing_angle
+export(int, EXP, 0, 90) var seeing_angle: int
 # The direction the guard faces
-export(Vector2) var seeing_direction
+export(Vector2) var seeing_direction: Vector2
 # The speed of the guard
 const BASE_SPEED = 30
 
@@ -91,7 +91,7 @@ func patrol(delta):
 					patrol_index += 1
 			# Change the direction toward the guard sees and go to the next step
 			Movement.Type.CHANGE_DIRECTION:
-				seeing_direction = step.destination_or_direction
+				_change_direction(step.destination_or_direction)
 				patrol_index += 1
 	
 	# Check if the route is ended, then start the patrol again from the beginning
@@ -103,17 +103,43 @@ func investigate(delta):
 	if investigate_route.size() == 0: return
 	
 	var next_point = investigate_route[investigate_index] * Global.tile_size # This row is repeated below
+	# Calculate the distance. Add half of tile-size, because the guard is centered
+	var distance = next_point - position + Vector2(Global.tile_size / 2, Global.tile_size / 2)
 	# If the next point on the route reached, increment the index
-	if (next_point - position).length_squared() < 1:
+	if distance.length_squared() < 1:
 		investigate_index += 1
 		next_point = investigate_route[investigate_index] * Global.tile_size
 	# If the destination reached, move to IDLE state and return
 	if investigate_index == investigate_route.size() - 1:
 		state = State.IDLE
 		return
-	# Move the guard towards the next point
-	var velocity = (next_point - position).normalized()
-	move_and_collide(velocity.round() * Global.map_scale * BASE_SPEED * delta, false)
+	
+	# Move the guard towards the next point if it's facing that direction or change the direction
+	# Use the normalized distance as velocity
+	print(distance.normalized())
+	if abs(seeing_direction.angle_to(distance)) < deg2rad(1):
+		move_and_collide(distance.normalized() * Global.map_scale * BASE_SPEED * delta, false)
+	else:
+		_change_direction(distance.normalized())
+
+# Change the direction the guard is facing
+func _change_direction(direction: Vector2):
+	# Change the rotation of the guard to match the moving direction
+	match round(direction.x):
+		1.0: match round(direction.y):
+			-1.0: rotation = deg2rad(-135)
+			0.0: rotation = deg2rad(-90)
+			1.0: rotation = deg2rad(-45)
+		0.0: match round(direction.y):
+			-1.0: rotation = deg2rad(180)
+			0.0: rotate(0)
+			1.0: rotation = 0
+		-1.0: match round(direction.y):
+			-1.0: rotation = deg2rad(135)
+			0.0: rotation = deg2rad(90)
+			1.0: rotation = deg2rad(45)
+	# Register the change
+	seeing_direction = direction
 
 # Make the guard alert
 func make_alert(location: Vector2, path: PoolVector2Array):
@@ -125,8 +151,9 @@ func make_alert(location: Vector2, path: PoolVector2Array):
 func _draw():
 	# TODO delete after testing
 	# For debugging, making the guard's vision visible
-	var from = Vector2(Global.tile_size / 2, Global.tile_size / 2)
-	draw_line(from, seeing_direction * seeing_distance * Global.tile_size + from, Color.yellow, 1)
-	draw_line(from, seeing_direction.rotated(deg2rad(seeing_angle / 2)) * seeing_distance * Global.tile_size + from, Color.yellow, 1)
-	draw_line(from, seeing_direction.rotated(-deg2rad(seeing_angle / 2)) * seeing_distance * Global.tile_size + from, Color.yellow, 1)
+	var from = Vector2(0, 0)
+	var direction = Vector2(0, 1) * seeing_distance * Global.tile_size
+	draw_line(from, direction + from, Color.yellow, 1)
+	draw_line(from, direction.rotated(deg2rad(seeing_angle / 2)) + from, Color.yellow, 1)
+	draw_line(from, direction.rotated(-deg2rad(seeing_angle / 2)) + from, Color.yellow, 1)
 	draw_line(from, to_local(PPlayer.global_position) + from, Color.red, 1)
