@@ -14,6 +14,12 @@ export var tile_size = 16
 # The scale applied to the maps
 export(Vector2) var map_scale = Vector2(3, 3)
 
+# The navigation map for AI movements
+var nav_map : AStar2D
+# The area which encapsulate all the tiles on all the TileMaps (layers).
+# Only calculated if need_navigation is true
+var map_area: Rect2
+
 # Entrances on the map. 
 # Each entrances identified by an id.
 # id = { <nested entrance dictionary>
@@ -151,3 +157,110 @@ func _deferred_change_map(entrance_id : int):
 		# Add the new map to Main/MapLayer then place the player on it
 		get_tree().get_root().get_node("/root/Main").add_child(current_map)
 		current_map.place_player(last_entrance["destination"])
+		# Initialize a new navigation map
+		init_navigation()
+
+# Initializes a navigation graph for the map
+func init_navigation():
+	nav_map = AStar2D.new()
+	
+	# Collect all the TiledMaps
+	var children = current_map.get_children()
+	var maps = []
+	for child in children:
+		if child is TileMap:
+			maps.append(child)
+	
+	# Get the area which encloses all the tilemaps
+	# (searching for max and min values for top-left and bottom-right corners)
+	for map in maps:
+		var layer_area = map.get_used_rect()
+		if layer_area.position.x < map_area.position.x:
+			map_area.position.x = layer_area.position.x
+		if layer_area.position.y < map_area.position.y:
+			map_area.position.y = layer_area.position.y
+		if layer_area.end.x > map_area.end.x:
+			map_area.end.x = layer_area.end.x
+		if layer_area.end.y > map_area.end.y:
+			map_area.end.y = layer_area.end.y
+	
+	# Collect all the nodes from the tilemaps
+	# TODO what to do with layers that has offset?
+	for y in range(map_area.size.y):
+		for x in range(map_area.size.x):
+			for map in maps:
+				var cell_id = map.get_cell(x, y)
+				# If the cell's name starts with 'path', it is a node
+				if cell_id != TileMap.INVALID_CELL and map.tile_set.tile_get_name(cell_id).begins_with("path"):
+					var point_id = calc_point_id(x, y, map_area.size.x)
+					nav_map.add_point(point_id, Vector2(x, y))
+	
+	# Connect the nearby points together
+	for point_id in nav_map.get_points():
+		var point = nav_map.get_point_position(point_id)
+		var neighbors = PoolVector2Array([
+			Vector2(point.x, point.y - 1),
+			Vector2(point.x, point.y + 1),
+			Vector2(point.x + 1, point.y),
+			Vector2(point.x - 1, point.y)
+		])
+		for neighbor in neighbors:
+			var neighbor_id = calc_point_id(neighbor.x, neighbor.y, map_area.size.x)
+			# If the neighboring tile is inside the area and part of the nav_map, connect
+			if map_area.has_point(neighbor) and nav_map.has_point(neighbor_id):
+				nav_map.connect_points(point_id, neighbor_id, true)
+	
+	# Disable points where doors are closed
+	# TODO change this after new type of disconnectibles are introduced
+	var doors = get_tree().get_nodes_in_group("doors")
+	for door in doors:
+		# Skip if the door is open
+		if door.is_open: continue
+		var map_coordinate = maps[0].world_to_map(door.position)
+		var door_id = calc_point_id(map_coordinate.x, map_coordinate.y, map_area.size.x)
+		# If the door is on a walkable path
+		if nav_map.has_point(door_id):
+			nav_map.set_point_disabled(door_id, true)
+
+# Calculates the id of a point for the navigation graph
+# Using TileMap coordinates
+func calc_point_id(x: int, y: int, area_width: int) -> int:
+	return x + area_width * y
+
+# Find a path between two points.
+# The TileMaps on the current map have to have the same offset
+#	is_global:		If false, it means the coordinates are TileMap coordinates
+func find_path(from: Vector2, to: Vector2, is_global: bool) -> PoolVector2Array:
+	# Find first TileMap child
+	var map: TileMap
+	for child in current_map.get_children():
+		if child is TileMap:
+			map = child
+			break
+	
+	# Convert to TileMap coordinates then return the calculated path
+	if is_global:
+		from = map.world_to_map(map.to_local(from))
+		to = map.world_to_map(map.to_local(to))
+	return nav_map.get_point_path(
+		calc_point_id(from.x, from.y, map_area.size.x),
+		calc_point_id(to.x, to.y, map_area.size.x))
+
+# Convert local coordinates to TileMap coordinates
+func local_to_tile_map(from: Vector2) -> Vector2:
+	# Find first TileMap child
+	var map: TileMap
+	for child in current_map.get_children():
+		if child is TileMap:
+			map = child
+			break
+	return map.world_to_map(from)
+
+func tile_map_to_local(from: Vector2) -> Vector2:
+	# Find first TileMap child
+	var map: TileMap
+	for child in current_map.get_children():
+		if child is TileMap:
+			map = child
+			break
+	return map.map_to_world(from)
