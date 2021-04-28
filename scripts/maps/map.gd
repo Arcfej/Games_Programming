@@ -8,6 +8,7 @@ func _ready():
 	for door in get_tree().get_nodes_in_group("doors"):
 		var is_open = Global.disconnectibles[door.get_id()]["is_connected"]
 		door.set_state(is_open)
+	# Listen to noises and switches
 	for switch in get_tree().get_nodes_in_group("switches"):
 		switch.connect("switch_doors", self, "_on_switch_doors")
 	for noise_maker in get_tree().get_nodes_in_group("noise_makers"):

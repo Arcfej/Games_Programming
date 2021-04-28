@@ -190,7 +190,7 @@ var disconnectibles = {
 }
 
 func _ready():
-	last_entrance = entrances[5]
+	last_entrance = entrances[7]
 
 # Call it when the player has been seen by a guard. It will display a loosing screen
 func player_seen():
@@ -225,6 +225,9 @@ func _deferred_change_map(entrance_id: int, needs_player: bool):
 			# Place the player on the map
 			if current_map.has_method("place_player"):
 				current_map.place_player(last_entrance["destination"])
+		# Connect to disconnectible state changes on the new map
+		for door in get_tree().get_nodes_in_group("doors"):
+			door.connect("door_state_changed", self, "_on_door_state_changed")
 
 # Initializes a navigation graph for the map
 func init_navigation():
@@ -278,8 +281,7 @@ func init_navigation():
 	
 	# Disable points where doors are closed
 	# TODO change this after new type of disconnectibles are introduced
-	var doors = get_tree().get_nodes_in_group("doors")
-	for door in doors:
+	for door in get_tree().get_nodes_in_group("doors"):
 		# Skip if the door is open
 		if door.is_open: continue
 		var map_coordinate = maps[0].world_to_map(door.position)
@@ -297,12 +299,9 @@ func calc_point_id(x: int, y: int, area_width: int) -> int:
 # The TileMaps on the current map have to have the same offset
 #	is_global:		If false, it means the coordinates are TileMap coordinates
 func find_path(from: Vector2, to: Vector2, is_global: bool) -> PoolVector2Array:
-	# Find first TileMap child
-	var map: TileMap
-	for child in current_map.get_children():
-		if child is TileMap:
-			map = child
-			break
+	var map = _get_map_reference()
+	# If there's not a TiledMap on current_map, return an empty array
+	if not map: return PoolVector2Array([])
 	
 	# Convert to TileMap coordinates then return the calculated path
 	if is_global:
@@ -311,6 +310,34 @@ func find_path(from: Vector2, to: Vector2, is_global: bool) -> PoolVector2Array:
 	return nav_map.get_point_path(
 		calc_point_id(from.x, from.y, map_area.size.x),
 		calc_point_id(to.x, to.y, map_area.size.x))
+
+# Called when a state of a door is changed.
+# Register the change on nav_map
+func _on_door_state_changed(id: int, is_open: bool):
+	# TODO send nav_map_changed signals for path-following guards
+	var map = _get_map_reference()
+	# If there's not a TiledMap on current_map, return
+	if not map: return
+	
+	for door in get_tree().get_nodes_in_group("doors"):
+		# Find the correct door
+		if door.id != id: continue
+		# Save it's changed state both in data and navigation
+		disconnectibles[id]["is_connected"] = is_open
+		var map_coordinate = map.world_to_map(door.position)
+		nav_map.set_point_disabled(
+			calc_point_id(map_coordinate.x, map_coordinate.y, map_area.size.x),
+			not is_open)
+
+# Return a TiledMap if there is one on current_map for coordinate conversion purposes.
+# Return null, if there's no TiledMap on current map
+func _get_map_reference() -> TileMap:
+	# Find first TileMap child
+	var map: TileMap
+	for child in current_map.get_children():
+		if child is TileMap:
+			return child
+	return null
 
 # Convert local coordinates to TileMap coordinates (local by TileMap)
 func local_to_tile_map(from: Vector2) -> Vector2:

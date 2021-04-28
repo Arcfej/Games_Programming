@@ -1,6 +1,8 @@
 extends StaticBody2D
 class_name Door
 
+signal door_state_changed(door_id, is_open)
+
 export (int) var id setget , get_id
 export var is_open = false
 
@@ -17,12 +19,12 @@ func switch():
 func open():
 	$AnimatedSprite.play("default")
 	$CollisionShape2D.disabled = true
-	Global.disconnectibles[id]["is_connected"] = true
+	emit_signal("door_state_changed", id, true)
 
 func close():
 	$AnimatedSprite.play("default", true)
 	$CollisionShape2D.disabled = false
-	Global.disconnectibles[id]["is_connected"] = false
+	emit_signal("door_state_changed", id, false)
 
 # Play the animation only once
 func _on_AnimatedSprite_animation_finished():

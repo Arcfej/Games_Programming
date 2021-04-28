@@ -85,6 +85,4 @@ position = Vector2( 136, -2 )
 rotation = 1.5708
 id = 9
 
-[connection signal="noise" from="Foreground/NoiseMaker" to="." method="_on_NoiseMaker_noise"]
-
 [editable path="Foreground/Guard"]

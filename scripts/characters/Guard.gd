@@ -173,7 +173,7 @@ func make_alert(location: Vector2, path: PoolVector2Array):
 	investigate_index = 0
 	investigate_route = path
 	# Remove the las one, because that is the object that made the sound. The guard cannot move there.
-	investigate_route.remove(investigate_route.size() - 1)
+	if investigate_route.size() > 0: investigate_route.remove(investigate_route.size() - 1)
 
 func _draw():
 	# TODO delete after testing
