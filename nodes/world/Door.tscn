@@ -10,6 +10,7 @@ extents = Vector2( 8, 8 )
 "disconnectibles",
 "doors",
 ]]
+collision_layer = 524801
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true

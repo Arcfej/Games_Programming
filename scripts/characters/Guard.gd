@@ -9,6 +9,8 @@ export(int) var seeing_distance: int
 export(int, EXP, 0, 90) var seeing_angle: int
 # The direction the guard faces
 var seeing_direction = Vector2(0, 1)
+# A close detection radius in tiles where the guard can detect the player outside it's seeing angle
+export(float, 100) var close_detection_radius
 
 # The speed of the guard
 const BASE_SPEED = 30
@@ -39,10 +41,6 @@ var investigate_route: PoolVector2Array
 # Indicate where the guard is at on it's route
 var investigate_index = 0
 
-func _ready():
-	# Don't allow to collide with child objects
-	$RayCast2D.add_exception($Key)
-
 func _process(delta):
 	# Indicate that the guard is alert or not
 	$Alert.visible = true if state == State.ALERT else false
@@ -54,8 +52,9 @@ func _physics_process(delta):
 	update()
 	# If the player in seeing distance check further
 	if enemy_to_player.length_squared() <= pow(seeing_distance * Global.tile_size, 2):
-		# Check if the player is in the guard's angle of vision
-		if abs(rad2deg(enemy_to_player.angle_to(seeing_direction.normalized()))) < seeing_angle / 2.0:
+		# Check if the player is in the guard's angle of vision or in close detection radius
+		if abs(rad2deg(enemy_to_player.angle_to(seeing_direction.normalized()))) < seeing_angle / 2.0 or \
+				enemy_to_player.length_squared() < pow(close_detection_radius * Global.tile_size, 2):
 			# TODO improve raycasting by casting it as a tangent vector instead of to the middle
 			$RayCast2D.enabled = true
 			$RayCast2D.cast_to = enemy_to_player

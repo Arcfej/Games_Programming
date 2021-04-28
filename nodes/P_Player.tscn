@@ -51,6 +51,7 @@ editor_draw_limits = true
 editor_draw_drag_margin = true
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 513
 
 [node name="AreaCollisionShape" type="CollisionShape2D" parent="Area2D"]
 position = Vector2( 8, 8 )

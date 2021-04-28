@@ -16,6 +16,7 @@ __meta__ = {
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
+collision_layer = 513
 format = 1
 tile_data = PoolIntArray( -1, 10, 0, -65536, 10, 2, -65535, 10, 0, -65534, 10, 2, -65533, 10, 0, 65535, 10, 0, 0, 2, 1, 1, 2, 3, 2, 2, 3, 3, 10, 0, 131071, 10, 0, 65536, 2, 2, 65537, 2, 1, 65538, 2, 0, 65539, 2, 3, 196607, 10, 0, 131072, 2, 2, 131073, 2, 3, 131074, 2, 2, 131075, 10, 0, 262143, 10, 0, 196608, 10, 0, 196609, 10, 0, 196610, 10, 0, 196611, 10, 0 )
 
@@ -23,6 +24,7 @@ tile_data = PoolIntArray( -1, 10, 0, -65536, 10, 2, -65535, 10, 0, -65534, 10, 2
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
+collision_layer = 513
 format = 1
 
 [node name="Door1" parent="Foreground" instance=ExtResource( 3 )]

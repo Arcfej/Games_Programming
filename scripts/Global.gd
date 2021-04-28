@@ -3,6 +3,7 @@ extends Node
 
 # LAYERS:
 # Layer 1:	for physical collisions and area detections
+# Layer 10:	for seeing and be noticable by enemies and everything which blocking view
 # Layer 20:	for interacting with Nodes in the world
 
 # The currently visible map
