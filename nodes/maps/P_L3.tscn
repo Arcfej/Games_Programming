@@ -60,7 +60,6 @@ id = 11
 [node name="Guard" parent="Foreground" instance=ExtResource( 5 )]
 position = Vector2( 152, 88 )
 seeing_distance = 4
-seeing_direction = Vector2( 1, 0 )
 state = 1
 
 [node name="Entrance4" parent="." instance=ExtResource( 3 )]

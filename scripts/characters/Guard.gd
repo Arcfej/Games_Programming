@@ -8,7 +8,8 @@ export(int) var seeing_distance: int
 # Seeing angle in degree (180 means the guard can see everything in the front and both sides
 export(int, EXP, 0, 90) var seeing_angle: int
 # The direction the guard faces
-export(Vector2) var seeing_direction: Vector2
+var seeing_direction = Vector2(0, 1)
+
 # The speed of the guard
 const BASE_SPEED = 30
 
@@ -39,8 +40,8 @@ var investigate_route: PoolVector2Array
 var investigate_index = 0
 
 func _ready():
-	# Don't allow to collide with self
-	$RayCast2D.add_exception(self)
+	# Don't allow to collide with child objects
+	$RayCast2D.add_exception($Key)
 
 func _process(delta):
 	# Indicate that the guard is alert or not
@@ -56,11 +57,14 @@ func _physics_process(delta):
 		# Check if the player is in the guard's angle of vision
 		if abs(rad2deg(enemy_to_player.angle_to(seeing_direction.normalized()))) < seeing_angle / 2.0:
 			# TODO improve raycasting by casting it as a tangent vector instead of to the middle
+			$RayCast2D.enabled = true
 			$RayCast2D.cast_to = enemy_to_player
 			# Ray-cast to the player and check if nothing obscures the guard's view
 			if $RayCast2D.is_colliding() and $RayCast2D.get_collider().get_parent() == PPlayer:
-				# TODO reset level
-				print("Busted")
+				# TODO detect collision too for game over
+				Global.player_seen()
+		else:
+			$RayCast2D.enabled = false
 	
 	# Chose behaviour based on state
 	match state:
@@ -74,6 +78,7 @@ func _physics_process(delta):
 
 # Moves the guard on its patrol route
 func patrol(delta):
+	if patrol_steps.size() == 0: return
 	# The step the guard is currently taking / will take
 	var step: Movement
 	step = patrol_steps[patrol_step_index]
@@ -120,11 +125,15 @@ func _move_on_route(delta, route: PoolVector2Array, index: int, repeat: bool) ->
 	if route.size() == 0: return index
 	
 	var next_point = Global.tile_map_to_local(route[index]) # This row is repeated below
+	# Calculate the distance. Add half of tile-size, because the guard is centered
+	var distance = next_point - position + Vector2(Global.tile_size / 2, Global.tile_size / 2)  # This row is repeated below
 	# If the next point on the route reached, increment the index
-	if (next_point - position + Vector2(Global.tile_size / 2, Global.tile_size / 2)).length_squared() < 1:
+	if distance.length_squared() < 1:
 		index += 1
-		# Update next point if it wasn't the last one
-		if index < route.size(): next_point = Global.tile_map_to_local(route[index])
+		# Update next point and distance if it wasn't the last one
+		if index < route.size():
+			next_point = Global.tile_map_to_local(route[index])
+			distance = next_point - position + Vector2(Global.tile_size / 2, Global.tile_size / 2)
 	
 	# Check if the end of the route is reached
 	if index == route.size():
@@ -132,11 +141,9 @@ func _move_on_route(delta, route: PoolVector2Array, index: int, repeat: bool) ->
 		if repeat: index = 0
 		return index
 	
-	# Calculate the distance. Add half of tile-size, because the guard is centered
-	var distance = next_point - position + Vector2(Global.tile_size / 2, Global.tile_size / 2)
 	# Move the guard towards the next point if it's facing that direction or change the direction
 	# Use the normalized distance as velocity
-	if abs(seeing_direction.angle_to(distance)) < deg2rad(1):
+	if abs(seeing_direction.rotated(transform.get_rotation()).angle_to(distance)) < deg2rad(4):
 		move_and_collide(distance.normalized() * Global.map_scale * BASE_SPEED * delta, false)
 	else:
 		_change_direction(distance.normalized())
@@ -159,8 +166,6 @@ func _change_direction(direction: Vector2):
 			-1.0: rotation = deg2rad(135)
 			0.0: rotation = deg2rad(90)
 			1.0: rotation = deg2rad(45)
-	# Register the change
-	seeing_direction = direction
 
 # Make the guard alert
 func make_alert(location: Vector2, path: PoolVector2Array):
@@ -175,7 +180,7 @@ func _draw():
 	# TODO delete after testing
 	# For debugging, making the guard's vision visible
 	var from = Vector2(0, 0)
-	var direction = Vector2(0, 1) * seeing_distance * Global.tile_size
+	var direction = seeing_direction * seeing_distance * Global.tile_size
 	draw_line(from, direction + from, Color.yellow, 1)
 	draw_line(from, direction.rotated(deg2rad(seeing_angle / 2.0)) + from, Color.yellow, 1)
 	draw_line(from, direction.rotated(-deg2rad(seeing_angle / 2.0)) + from, Color.yellow, 1)
