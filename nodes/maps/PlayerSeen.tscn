@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scripts/PlayerSeen.gd" type="Script" id=1]
+[ext_resource path="res://fonts/Silver.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://fonts/big.tres" type="DynamicFont" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 1
+font_data = ExtResource( 2 )
+
+[node name="PlayerSeen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( -56, -21 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 346.0
+margin_top = 243.0
+margin_right = 677.0
+margin_bottom = 356.0
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+margin_right = 445.0
+margin_bottom = 72.0
+custom_fonts/font = ExtResource( 3 )
+text = "You have been caught!"
+align = 1
+
+[node name="Label2" type="Label" parent="HBoxContainer"]
+margin_top = 76.0
+margin_right = 445.0
+margin_bottom = 113.0
+custom_fonts/font = SubResource( 1 )
+text = "Press enter and try again"
+align = 1

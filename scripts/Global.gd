@@ -8,9 +8,9 @@ extends Node
 # The currently visible map
 var current_map
 # The entrance the player used last
-export var last_entrance = 5
+export(Dictionary) var last_entrance
 # The tile size of the maps
-export var tile_size = 16
+export(int) var tile_size = 16
 # The scale applied to the maps
 export(Vector2) var map_scale = Vector2(3, 3)
 
@@ -29,36 +29,58 @@ var map_area: Rect2
 #}
 # When the player uses an entrance, it will arrive at that position on the map.
 var entrances = {
+	-1: {
+		id = -1,
+		map = "res://nodes/maps/PlayerSeen.tscn",
+	},
 	0 : {
+		id = 0,
 		map = "res://nodes/maps/P_L1.tscn",
 		destination = Vector2(0, 0),
 	},
 	1 : {
+		id = 1,
 		map = "res://nodes/maps/P_L2.tscn",
 		destination = Vector2(0, 5),
 	},
 	2 : {
+		id = 2,
 		map = "res://nodes/maps/P_L1.tscn",
 		destination = Vector2(3, 1),
 	},
 	3: {
+		id = 3,
 		map = "res://nodes/maps/P_L3.tscn",
 		destination = Vector2(5, 10),
 	},
 	4: {
+		id = 4,
 		map = "res://nodes/maps/P_L2.tscn",
 		destination = Vector2(1, 0),
 	},
 	5: {
+		id = 5,
 		map = "res://nodes/maps/P_L4.tscn",
 		destination = Vector2(8, 8),
 	},
 	6: {
+		id = 6,
 		map = "res://nodes/maps/P_L3.tscn",
 		destination = Vector2(5, 0),
 	},
 	7: {
+		id = 7,
 		map = "res://nodes/maps/P_L5.tscn",
+		destination = Vector2(8, 9),
+	},
+	8: {
+		id = 8,
+		map = "res://nodes/maps/P_L4.tscn",
+		destination = Vector2(11, 0),
+	},
+	9: {
+		id = 9,
+		map = "res://nodes/maps/WinScreen.tscn",
 		destination = Vector2(0, 0),
 	}
 }
@@ -131,18 +153,57 @@ var disconnectibles = {
 	15: {
 		type = Disconnectible.Door,
 		is_connected = true
+	},
+	16: {
+		type = Disconnectible.Door,
+		is_connected = true
+	},
+	17: {
+		type = Disconnectible.Door,
+		is_connected = true
+	},
+	18: {
+		type = Disconnectible.Door,
+		is_connected = true
+	},
+	19: {
+		type = Disconnectible.Door,
+		is_connected = true
+	},
+	20: {
+		type = Disconnectible.Door,
+		is_connected = false
+	},
+	21: {
+		type = Disconnectible.Door,
+		is_connected = true
+	},
+	22: {
+		type = Disconnectible.Door,
+		is_connected = false
+	},
+	23: {
+		type = Disconnectible.Door,
+		is_connected = false
 	}
 }
 
+func _ready():
+	last_entrance = entrances[5]
+
+# Call it when the player has been seen by a guard. It will display a loosing screen
+func player_seen():
+	call_deferred("_deferred_change_map" , -1, false)
+
 # Loads a new map when the entrance is usedl
 func entrance_reached(entrance_id : int):
-	call_deferred("_deferred_change_map", entrance_id)
+	call_deferred("_deferred_change_map", entrance_id, true)
 
 # Inner function for deferred loading of the new map.
 # It should be called only with `call_deferred()`
-# Inputs: the path of the map's file and the position to place the player on after loading
-func _deferred_change_map(entrance_id : int):
-	# Remove the player from the old map if there's any
+# Inputs: the path of the map's file, tand if the player needs to be placed on the map
+func _deferred_change_map(entrance_id: int, needs_player: bool):
+	# Remove the player from the old map if they's need to place on the new one
 	if PPlayer.get_parent():
 		PPlayer.get_parent().remove_child(PPlayer)
 	# Free up the current map if there's any
@@ -152,13 +213,17 @@ func _deferred_change_map(entrance_id : int):
 	# TODO optimize loading
 	current_map = load(entrances[entrance_id]["map"]).instance()
 	if current_map:
-		# Save the last used entrance
-		last_entrance = entrances[entrance_id]
-		# Add the new map to Main/MapLayer then place the player on it
+		# Save the last used entrance if it was a map
+		if entrance_id >= 0:
+			last_entrance = entrances[entrance_id]
+		# Add the new map to Main/MapLayer
 		get_tree().get_root().get_node("/root/Main").add_child(current_map)
-		current_map.place_player(last_entrance["destination"])
 		# Initialize a new navigation map
 		init_navigation()
+		if needs_player and last_entrance.has("destination"):
+			# Place the player on the map
+			if current_map.has_method("place_player"):
+				current_map.place_player(last_entrance["destination"])
 
 # Initializes a navigation graph for the map
 func init_navigation():
@@ -246,7 +311,7 @@ func find_path(from: Vector2, to: Vector2, is_global: bool) -> PoolVector2Array:
 		calc_point_id(from.x, from.y, map_area.size.x),
 		calc_point_id(to.x, to.y, map_area.size.x))
 
-# Convert local coordinates to TileMap coordinates
+# Convert local coordinates to TileMap coordinates (local by TileMap)
 func local_to_tile_map(from: Vector2) -> Vector2:
 	# Find first TileMap child
 	var map: TileMap
@@ -256,6 +321,7 @@ func local_to_tile_map(from: Vector2) -> Vector2:
 			break
 	return map.world_to_map(from)
 
+# Convert TileMap coordinates to local ones (local by TileMap)
 func tile_map_to_local(from: Vector2) -> Vector2:
 	# Find first TileMap child
 	var map: TileMap
