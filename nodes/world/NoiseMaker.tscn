@@ -11,8 +11,8 @@ region = Rect2( 560, 336, 16, 16 )
 extents = Vector2( 8, 8 )
 
 [node name="NoiseMaker" type="StaticBody2D" groups=[
-"interactive",
-"noise_maker",
+"interactives",
+"noise_makers",
 ]]
 collision_layer = 524289
 script = ExtResource( 2 )

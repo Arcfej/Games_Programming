@@ -23,8 +23,8 @@ animations = [ {
 extents = Vector2( 8, 8 )
 
 [node name="Switch" type="StaticBody2D" groups=[
-"interactive",
-"switch",
+"interactives",
+"switches",
 ]]
 collision_layer = 524289
 script = ExtResource( 2 )

@@ -43,5 +43,3 @@ id = 2
 position = Vector2( 24, -2 )
 rotation = 1.5708
 id = 3
-
-[connection signal="switch_doors" from="Foreground/Switch" to="." method="_on_Switch_switch_doors"]

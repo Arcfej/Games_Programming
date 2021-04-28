@@ -8,7 +8,7 @@ func _physics_process(delta):
 	# TODO check interactives in all 4 directions and pop up a menu to chose if there are more than one
 	if Input.is_action_just_pressed("ui_accept"):
 		for body in $InteractiveArea.get_overlapping_bodies():
-			if body.is_in_group("interactive"):
+			if body.is_in_group("interactives"):
 				body.interact_with()
 	
 	# TODO storing the last direction in an enum,
