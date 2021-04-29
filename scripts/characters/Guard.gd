@@ -62,7 +62,6 @@ func _physics_process(delta):
 			$RayCast2D.cast_to = enemy_to_player
 			# Ray-cast to the player and check if nothing obscures the guard's view
 			if $RayCast2D.is_colliding() and $RayCast2D.get_collider().get_parent() == PPlayer:
-				# TODO detect collision too for game over
 				Global.player_seen()
 		else:
 			$RayCast2D.enabled = false
@@ -201,4 +200,3 @@ func _draw():
 	draw_line(from, direction + from, Color.yellow, 1)
 	draw_line(from, direction.rotated(deg2rad(seeing_angle / 2.0)) + from, Color.yellow, 1)
 	draw_line(from, direction.rotated(-deg2rad(seeing_angle / 2.0)) + from, Color.yellow, 1)
-	draw_line(from, to_local(PPlayer.global_position) + from, Color.red, 1)

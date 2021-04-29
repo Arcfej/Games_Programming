@@ -220,7 +220,7 @@ var disconnectibles = {
 }
 
 func _ready():
-	last_entrance = entrances[7]
+	last_entrance = entrances[0]
 
 # Call it when the player has been seen by a guard. It will display a loosing screen
 func player_seen():
