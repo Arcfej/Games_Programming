@@ -3,6 +3,8 @@ extends KinematicBody2D
 # The base speed of the player
 const BASE_SPEED = 30
 
+export(Dictionary) var inventory: Dictionary
+
 func _physics_process(delta):
 	# Getting user input for 'action'
 	# TODO check interactives in all 4 directions and pop up a menu to chose if there are more than one
@@ -39,3 +41,9 @@ func enter_map(new_position : Vector2):
 func _on_Area2D_area_entered(area):
 	if area is Entrance:
 		Global.entrance_reached(area.get_id())
+	if area is Key:
+		var keys = PoolIntArray([])
+		if inventory.has("key"):
+			keys.append_array(inventory["key"])
+		keys.append_array(area.get_key())
+		inventory["key"] = keys

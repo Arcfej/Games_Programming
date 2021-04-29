@@ -11,6 +11,7 @@ region = Rect2( 512, 176, 16, 16 )
 extents = Vector2( 8, 5 )
 
 [node name="Key" type="Area2D" groups=[
+"collectibles",
 "connectors",
 "items",
 "keys",
