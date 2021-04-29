@@ -1,0 +1,63 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://texture/prototype.tres" type="TileSet" id=1]
+[ext_resource path="res://nodes/world/NoiseMaker.tscn" type="PackedScene" id=2]
+[ext_resource path="res://nodes/Guard.tscn" type="PackedScene" id=3]
+[ext_resource path="res://nodes/world/Door.tscn" type="PackedScene" id=4]
+[ext_resource path="res://nodes/world/Switch.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scripts/maps/P_L6.gd" type="Script" id=6]
+[ext_resource path="res://nodes/world/Entrance.tscn" type="PackedScene" id=7]
+
+[node name="Map" type="Node2D"]
+script = ExtResource( 6 )
+
+[node name="Background" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
+collision_layer = 513
+format = 1
+tile_data = PoolIntArray( 0, 10, 0, 1, 2, 0, 2, 10, 0, 3, 10, 2, 4, 10, 0, 5, 10, 2, 6, 10, 0, 65536, 10, 0, 65537, 2, 2, 65538, 10, 0, 65539, 2, 1, 65540, 2, 0, 65541, 2, 0, 65542, 10, 0, 131072, 10, 0, 131073, 2, 3, 131074, 10, 0, 131075, 2, 0, 131076, 2, 0, 131077, 2, 3, 131078, 10, 0, 196608, 10, 2, 196609, 2, 3, 196610, 10, 0, 196611, 2, 3, 196612, 10, 0, 196613, 2, 2, 196614, 10, 0, 196615, 10, 0, 196616, 10, 0, 196618, 10, 0, 196619, 10, 0, 196620, 10, 2, 196621, 10, 1, 196622, 10, 0, 262144, 10, 2, 262145, 2, 1, 262146, 10, 0, 262147, 2, 0, 262148, 10, 0, 262149, 2, 0, 262150, 10, 0, 262151, 2, 0, 262152, 10, 0, 262153, 10, 0, 262154, 10, 0, 262155, 2, 0, 262156, 2, 0, 262157, 2, 3, 262158, 10, 2, 327680, 10, 0, 327681, 2, 1, 327682, 2, 3, 327683, 2, 1, 327684, 2, 1, 327685, 2, 2, 327686, 2, 3, 327687, 2, 1, 327688, 2, 3, 327689, 2, 2, 327690, 2, 3, 327691, 2, 3, 327692, 2, 1, 327693, 2, 1, 327694, 10, 0, 393216, 10, 0, 393217, 10, 2, 393218, 10, 0, 393219, 10, 0, 393220, 2, 0, 393221, 10, 0, 393222, 10, 0, 393223, 10, 1, 393224, 10, 0, 393225, 10, 2, 393226, 10, 0, 393227, 2, 3, 393228, 2, 3, 393229, 2, 3, 393230, 10, 0, 458762, 10, 0, 458763, 10, 0, 458764, 10, 0, 458765, 10, 0, 458766, 10, 0 )
+
+[node name="Foreground" type="TileMap" parent="."]
+format = 1
+
+[node name="Door24" parent="Foreground" instance=ExtResource( 4 )]
+position = Vector2( 16, 0 )
+id = 24
+
+[node name="Door25" parent="Foreground" instance=ExtResource( 4 )]
+position = Vector2( 64, 96 )
+id = 25
+
+[node name="Door26" parent="Foreground" instance=ExtResource( 4 )]
+position = Vector2( 32, 80 )
+id = 26
+
+[node name="Door27" parent="Foreground" instance=ExtResource( 4 )]
+position = Vector2( 96, 80 )
+id = 27
+
+[node name="Door28" parent="Foreground" instance=ExtResource( 4 )]
+position = Vector2( 160, 80 )
+id = 28
+
+[node name="Switch" parent="Foreground" instance=ExtResource( 5 )]
+position = Vector2( 112, 64 )
+connected_door_ids = [ 26, 27 ]
+
+[node name="NoiseMaker" parent="Foreground" instance=ExtResource( 2 )]
+position = Vector2( 64, 16 )
+
+[node name="Guard" parent="Foreground" instance=ExtResource( 3 )]
+position = Vector2( 200, 72 )
+
+[node name="Entrance10" parent="." instance=ExtResource( 7 )]
+position = Vector2( 72, 114 )
+rotation = 1.5708
+id = 10
+
+[node name="Entrance11" parent="." instance=ExtResource( 7 )]
+position = Vector2( 24, -2 )
+rotation = 1.5708
+id = 11

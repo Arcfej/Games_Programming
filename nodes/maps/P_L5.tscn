@@ -82,5 +82,3 @@ id = 8
 position = Vector2( 136, -2 )
 rotation = 1.5708
 id = 9
-
-[editable path="Foreground/Guard"]

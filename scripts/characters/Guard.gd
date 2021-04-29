@@ -161,6 +161,7 @@ func _move_on_route(delta, route: PoolVector2Array, index: int, repeat: bool) ->
 				# If it's a switch, switch it
 				if collider is Switch:
 					collider.interact_with()
+					index += 1
 	else:
 		_change_direction(distance.normalized())
 	

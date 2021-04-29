@@ -81,6 +81,16 @@ var entrances = {
 	},
 	9: {
 		id = 9,
+		map = "res://nodes/maps/P_L6.tscn",
+		destination = Vector2(4, 6),
+	},
+	10: {
+		id = 10,
+		map = "res://nodes/maps/P_L5.tscn",
+		destination = Vector2(8, 0),
+	},
+	11: {
+		id = 11,
 		map = "res://nodes/maps/WinScreen.tscn",
 		destination = Vector2(0, 0),
 	}
@@ -186,6 +196,26 @@ var disconnectibles = {
 	23: {
 		type = Disconnectible.Door,
 		is_connected = false
+	},
+	24: {
+		type = Disconnectible.Door,
+		is_connected = true
+	},
+	25: {
+		type = Disconnectible.Door,
+		is_connected = true
+	},
+	26: {
+		type = Disconnectible.Door,
+		is_connected = false
+	},
+	27: {
+		type = Disconnectible.Door,
+		is_connected = false
+	},
+	28: {
+		type = Disconnectible.Door,
+		is_connected = true
 	}
 }
 
@@ -422,21 +452,21 @@ func _recursive_find(from: Vector2, to: Vector2, interactives: Array,
 						undo_redo.commit_action()
 						undo_count += 1
 		
+		# Remove the last step before calculating further paths
+		# (The last step will be the first step of the calculated further path. This way the step won't be duplicated)
+		var last_point = from
+		if path.size() > 0:
+			last_point = path[path.size() - 1]
+			path.remove(path.size() - 1)
 		# Check if the goal is reachable after interacting with the interactive
 		var path_to_end = path
-		path_to_end.append_array(_find_simple_path(path[path.size()-1], to))
+		path_to_end.append_array(_find_simple_path(last_point, to))
 		# If a way is found to the goal and it's shorter than a valid solution (longer than 0), overwrite solution with this path
 		if path_to_end.size() > path.size() and (path_to_end.size() < solution.size() or solution.size() == 0):
 			solution = path_to_end
 		# After 50 steps, deem the goal unreachable
 		# Before 50 steps have been taken, check if the taken path so far is still shorter than solution
 		if path.size() < 50 and (solution.size() == 0 or path.size() < solution.size()):
-			# Remove the last step before calculating further paths
-			# (The last step will be the first step of the calculated further path. This way the step won't be duplicated)
-			var last_point = from
-			if path.size() > 0:
-				last_point = path[path.size() - 1]
-				path.remove(path.size() - 1)
 			# Find further paths recursively and append it
 			path.append_array(_recursive_find(last_point, to, interactives, key_ids, path, solution, undo_redo))
 			# If the new path ends with the goal and it's shorter then solution, replace solution with it

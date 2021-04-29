@@ -11,7 +11,8 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("ui_accept"):
 		for body in $InteractiveArea.get_overlapping_bodies():
 			if body.is_in_group("interactives"):
-				body.interact_with()
+				if body.has_method("interact_with"):
+					body.interact_with()
 			if body is Door and inventory.has("key"):
 				for id in inventory["key"]:
 					if id == body.id:
