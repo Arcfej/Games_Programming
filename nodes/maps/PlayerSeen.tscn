@@ -11,19 +11,16 @@ outline_color = Color( 0, 0, 0, 1 )
 extra_spacing_char = 1
 font_data = ExtResource( 2 )
 
-[node name="PlayerSeen" type="Control"]
+[node name="PlayerSeen" type="CenterContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_pivot_offset = Vector2( -56, -21 )
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="HBoxContainer" type="VBoxContainer" parent="."]
-margin_left = 346.0
+margin_left = 289.0
 margin_top = 243.0
-margin_right = 677.0
+margin_right = 734.0
 margin_bottom = 356.0
 
 [node name="Label" type="Label" parent="HBoxContainer"]
