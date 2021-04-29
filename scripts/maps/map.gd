@@ -41,7 +41,7 @@ func _on_switch_doors(door_ids: Array):
 func _on_noise(location: Vector2, distance: int):
 	for listener in get_tree().get_nodes_in_group("listener"):
 		if listener is Guard and (to_local(location) - listener.position).length_squared() < pow(distance * Global.tile_size, 2):
-			var path = Global.find_interactive_path(listener.global_position, location, listener.keys, true)
+			var path = Global.find_interactive_path(listener.global_position, location, listener.key, true)
 			listener.make_alert(location, path)
 
 func _draw():

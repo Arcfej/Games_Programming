@@ -41,7 +41,7 @@ var investigate_route: PoolVector2Array
 # Indicate where the guard is at on it's route
 var investigate_index = 0
 
-export(PoolIntArray) var keys
+export(PoolIntArray) var key
 
 func _process(delta):
 	# Indicate that the guard is alert or not
