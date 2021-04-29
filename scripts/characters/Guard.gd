@@ -41,6 +41,8 @@ var investigate_route: PoolVector2Array
 # Indicate where the guard is at on it's route
 var investigate_index = 0
 
+export(PoolIntArray) var keys
+
 func _process(delta):
 	# Indicate that the guard is alert or not
 	$Alert.visible = true if state == State.ALERT else false
@@ -97,7 +99,7 @@ func patrol(delta):
 		Movement.Type.MOVE:
 			# Calculate the route for the movement if it's just started
 			if patrol_move_index == -1:
-				patrol_route = Global.find_path(Global.local_to_tile_map(position), step.destination_or_direction, false)
+				patrol_route = Global.find_simple_path(Global.local_to_tile_map(position), step.destination_or_direction, false)
 				patrol_move_index = 0
 			# Move the guard on it's road
 			patrol_move_index = _move_on_route(delta, patrol_route, patrol_move_index, false)

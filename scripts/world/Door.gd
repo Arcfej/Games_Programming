@@ -34,7 +34,7 @@ func _on_AnimatedSprite_animation_finished():
 func get_id() -> int:
 	return id
 
-# Set the state of the door without animation
+# Set the state of the door without animation and emitting a signal
 func set_state(has_opened: bool):
 	is_open = has_opened
 	if is_open:

@@ -6,7 +6,7 @@
 [ext_resource path="res://nodes/world/NoiseMaker.tscn" type="PackedScene" id=4]
 [ext_resource path="res://nodes/Guard.tscn" type="PackedScene" id=5]
 [ext_resource path="res://nodes/world/Entrance.tscn" type="PackedScene" id=6]
-[ext_resource path="res://nodes/Key.tscn" type="PackedScene" id=7]
+[ext_resource path="res://nodes/items/Key.tscn" type="PackedScene" id=7]
 [ext_resource path="res://nodes/world/Switch.tscn" type="PackedScene" id=8]
 
 [node name="Map" type="Node2D"]
@@ -61,10 +61,8 @@ hearing_distance = 11
 
 [node name="Guard" parent="Foreground" instance=ExtResource( 5 )]
 position = Vector2( 216, 104 )
-close_detection_radius = 1.4
-
-[node name="Key" parent="Foreground/Guard" index="4"]
-opens = PoolIntArray( 20 )
+close_detection_radius = 1.5
+keys = PoolIntArray( 23 )
 
 [node name="Key" parent="Foreground" instance=ExtResource( 7 )]
 visible = true

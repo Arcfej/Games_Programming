@@ -295,10 +295,11 @@ func init_navigation():
 func calc_point_id(x: int, y: int, area_width: int) -> int:
 	return x + area_width * y
 
-# Find a path between two points.
+# Find a path between two points without interacting with objects on the map.
 # The TileMaps on the current map have to have the same offset
 #	is_global:		If false, it means the coordinates are TileMap coordinates
-func find_path(from: Vector2, to: Vector2, is_global: bool) -> PoolVector2Array:
+func find_simple_path(from: Vector2, to: Vector2, is_global: bool) -> PoolVector2Array:
+	# The first part of this method is repeated in find_interactive_path
 	var map = _get_map_reference()
 	# If there's not a TiledMap on current_map, return an empty array
 	if not map: return PoolVector2Array([])
@@ -307,9 +308,146 @@ func find_path(from: Vector2, to: Vector2, is_global: bool) -> PoolVector2Array:
 	if is_global:
 		from = map.world_to_map(map.to_local(from))
 		to = map.world_to_map(map.to_local(to))
+	
+	return _find_simple_path(from, to)
+
+# Find the shortest path between two points, including actions when you interact with objects on the way
+# The TileMaps on the current map have to have the same offset
+#	key_ids:		the id of the doors the character can open with their key(s)
+#	is_global:		If false, it means the coordinates are TileMap coordinates
+func find_interactive_path(from: Vector2, to: Vector2, key_ids: PoolIntArray,
+		is_global: bool) -> PoolVector2Array:
+	# The first part of this method is repeated in find_simple_path
+	var map = _get_map_reference()
+	# If there's not a TiledMap on current_map, return an empty array
+	if not map: return PoolVector2Array([])
+	
+	# Convert to TileMap coordinates then return the calculated path
+	if is_global:
+		from = map.world_to_map(map.to_local(from))
+		to = map.world_to_map(map.to_local(to))
+	
+	# Initial solution is the simple path withouth interacting with objects
+	var solution = _find_simple_path(from, to)
+	var interactives = get_tree().get_nodes_in_group("interactives")
+	
+	# Find the solution which takes the least steps
+	solution = _recursive_find(from, to, interactives, key_ids, PoolVector2Array([]), solution, UndoRedo.new())
+	
+	return solution
+
+# Internal function to find a simple path between two points without interacting
+# with objects on the way. Coordinates are TileMap coordinates
+func _find_simple_path(from: Vector2, to: Vector2) -> PoolVector2Array:
 	return nav_map.get_point_path(
 		calc_point_id(from.x, from.y, map_area.size.x),
 		calc_point_id(to.x, to.y, map_area.size.x))
+
+# Internal function to calculate the shortest interactive path recursively.
+#	from, to:		coordinates are in TiledMap coordinates
+#	interactives:	the objects the character can interact with on the map
+#	key_ids:		the doors the character can open with their key(s)
+#	path_done:		the path the character have done so far (in the previous _recursive_find method)
+#	solution:		the shortest path found so far
+#	unde_redo:		to do/undo actions on the objects and nav_map while searching for a path
+func _recursive_find(from: Vector2, to: Vector2, interactives: Array,
+		key_ids: PoolIntArray, path_done: PoolVector2Array, solution: PoolVector2Array,
+		undo_redo: UndoRedo) -> PoolVector2Array:
+	# Go through all the interactives
+	for interactive in interactives:
+		# For counting how many actions have to be undone after every iteration
+		# to restore the nav_map and interactive to their initial state
+		var undo_count = 0
+		# Ignore the NoiseMakers
+		if interactive is NoiseMaker: continue
+		# Ignore open doors as the character can already move across them
+		if interactive is Door and interactive.is_open: continue
+		# Ignore closed doors the character cannot open
+		if interactive is Door:
+			var has_key
+			for key in key_ids:
+				has_key = key == interactive.id
+				if has_key: break
+			if not has_key: continue
+		
+		# Convert the interactive's position to TileMap coordinates
+		var object_position = global_to_tile_map(interactive.global_position)
+		# Ignore the interactives that just has been reached
+		if object_position == from: continue
+		# Initialize a new path to operate on from path_done
+		var path = path_done
+		
+		# Enable the interactive on the nav_map temporarily to be able to navigate there
+		undo_redo.create_action("Nav-point enabled")
+		undo_redo.add_do_method(nav_map, "set_point_disabled", calc_point_id(object_position.x, object_position.y, map_area.size.x), false)
+		undo_redo.add_undo_method(nav_map, "set_point_disabled", calc_point_id(object_position.x, object_position.y, map_area.size.x), true)
+		while[true]:
+			if not undo_redo.is_commiting_action(): break
+		undo_redo.commit_action()
+		undo_count += 1
+		
+		# Calculate the path to the interactive
+		path.append_array(_find_simple_path(from, object_position))
+		# Disable the interactive again on the nav_map if no path found or the path is longer then a valid solution
+		# Iterate to the next interactive
+		if path.size() == path_done.size() or (solution.size() > 0 and path.size() > solution.size()):
+			undo_redo.undo()
+			continue
+		
+		# If the interactive is a door, open it temporarily
+		if interactive is Door:
+			undo_redo.create_action("open_door")
+			undo_redo.add_do_method(interactive, "set_state", true)
+			undo_redo.add_undo_method(interactive, "set_state", false)
+			undo_redo.add_do_method(self, "_on_door_state_changed", interactive.id, true)
+			undo_redo.add_undo_method(self, "_on_door_state_changed", interactive.id, false)
+			while[true]:
+				if not undo_redo.is_commiting_action(): break
+			undo_redo.commit_action()
+			undo_count += 1
+		# If the interactive is a switch, switch it once
+		elif interactive is Switch:
+			for id in interactive.connected_door_ids:
+				for door in get_tree().get_nodes_in_group("doors"):
+					if door.id == id:
+						# Change every connected door's state temporarily
+						var was_open = door.is_open
+						undo_redo.create_action("switch")
+						undo_redo.add_do_method(door, "set_state", false if was_open else true)
+						undo_redo.add_undo_method(door, "set_state", true if was_open else false)
+						undo_redo.add_do_method(self, "_on_door_state_changed", id, false if was_open else true)
+						undo_redo.add_undo_method(self, "_on_door_state_changed", id, true if was_open else false)
+						while[true]:
+							if not undo_redo.is_commiting_action(): break
+						undo_redo.commit_action()
+						undo_count += 1
+		
+		# Check if the goal is reachable after interacting with the interactive
+		var path_to_end = path
+		path_to_end.append_array(_find_simple_path(path[path.size()-1], to))
+		# If a way is found to the goal and it's shorter than a valid solution (longer than 0), overwrite solution with this path
+		if path_to_end.size() > path.size() and (path_to_end.size() < solution.size() or solution.size() == 0):
+			solution = path_to_end
+		# After 50 steps, deem the goal unreachable
+		# Before 50 steps have been taken, check if the taken path so far is still shorter than solution
+		if path.size() < 50 and (solution.size() == 0 or path.size() < solution.size()):
+			# Remove the last step before calculating further paths
+			# (The last step will be the first step of the calculated further path. This way the step won't be duplicated)
+			var last_point = from
+			if path.size() > 0:
+				last_point = path[path.size() - 1]
+				path.remove(path.size() - 1)
+			# Find further paths recursively and append it
+			path.append_array(_recursive_find(last_point, to, interactives, key_ids, path, solution, undo_redo))
+			# If the new path ends with the goal and it's shorter then solution, replace solution with it
+			if path.size() > 0 and path[path.size() - 1] == to and path.size() < solution.size():
+				solution = path
+		# Restore the state of nav_map and the interactive before going to the next iteration
+		for _i in range(undo_count):
+			while[true]:
+				if not undo_redo.is_commiting_action(): break
+			undo_redo.undo()
+	return solution
 
 # Called when a state of a door is changed.
 # Register the change on nav_map
@@ -342,19 +480,16 @@ func _get_map_reference() -> TileMap:
 # Convert local coordinates to TileMap coordinates (local by TileMap)
 func local_to_tile_map(from: Vector2) -> Vector2:
 	# Find first TileMap child
-	var map: TileMap
-	for child in current_map.get_children():
-		if child is TileMap:
-			map = child
-			break
+	var map: TileMap = _get_map_reference()
 	return map.world_to_map(from)
+
+# Convert gloval coordinates to TileMap coordinates
+func global_to_tile_map(from: Vector2) -> Vector2:
+	var map: TileMap = _get_map_reference()
+	return map.world_to_map(map.to_local(from))
 
 # Convert TileMap coordinates to local ones (local by TileMap)
 func tile_map_to_local(from: Vector2) -> Vector2:
 	# Find first TileMap child
-	var map: TileMap
-	for child in current_map.get_children():
-		if child is TileMap:
-			map = child
-			break
+	var map: TileMap = _get_map_reference()
 	return map.map_to_world(from)

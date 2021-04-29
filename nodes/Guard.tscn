@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://texture/prototype_transparent.png" type="Texture" id=1]
 [ext_resource path="res://scripts/characters/Guard.gd" type="Script" id=2]
-[ext_resource path="res://nodes/Key.tscn" type="PackedScene" id=3]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
@@ -52,8 +51,6 @@ show_behind_parent = true
 position = Vector2( 0, -12 )
 scale = Vector2( 0.5, 0.5 )
 texture = SubResource( 3 )
-
-[node name="Key" parent="." instance=ExtResource( 3 )]
 
 [node name="InteractiveArea" type="Area2D" parent="."]
 position = Vector2( 0, 1 )

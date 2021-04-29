@@ -9,6 +9,7 @@ extents = Vector2( 8, 8 )
 [node name="Door" type="StaticBody2D" groups=[
 "disconnectibles",
 "doors",
+"interactives",
 ]]
 collision_layer = 524801
 script = ExtResource( 2 )
