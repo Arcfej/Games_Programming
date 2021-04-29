@@ -12,6 +12,11 @@ func _physics_process(delta):
 		for body in $InteractiveArea.get_overlapping_bodies():
 			if body.is_in_group("interactives"):
 				body.interact_with()
+			if body is Door and inventory.has("key"):
+				for id in inventory["key"]:
+					if id == body.id:
+						body.open()
+						break
 	
 	# TODO storing the last direction in an enum,
 	# so always react to new key-presses, not in the order of up-left-right-down
