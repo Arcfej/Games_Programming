@@ -145,7 +145,22 @@ func _move_on_route(delta, route: PoolVector2Array, index: int, repeat: bool) ->
 	# Move the guard towards the next point if it's facing that direction or change the direction
 	# Use the normalized distance as velocity
 	if abs(seeing_direction.rotated(transform.get_rotation()).angle_to(distance)) < deg2rad(4):
-		move_and_collide(distance.normalized() * Global.map_scale * BASE_SPEED * delta, false)
+		# Move the guard and check if a collision's occured
+		var collision: KinematicCollision2D = move_and_collide(distance.normalized() * Global.map_scale * BASE_SPEED * delta, false)
+		if collision:
+			var collider = collision.get_collider()
+			# If the collider object is the next step on the route, it means the guard has to interact with it
+			var pos = Global.global_to_tile_map(collider.global_position)
+			if Global.global_to_tile_map(collider.global_position) == route[index]:
+				# If it's a door and the guard has a key for it, open the door
+				if collider is Door:
+					for id in key:
+						if collider.id == id:
+							collider.open()
+							break
+				# If it's a switch, switch it
+				if collider is Switch:
+					collider.interact_with()
 	else:
 		_change_direction(distance.normalized())
 	
