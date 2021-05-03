@@ -8,6 +8,7 @@ extends Node
 
 # The currently visible map
 var current_map
+
 # The entrance the player used last
 export(Dictionary) var last_entrance
 # The tile size of the maps
@@ -30,6 +31,10 @@ var map_area: Rect2
 #}
 # When the player uses an entrance, it will arrive at that position on the map.
 var entrances = {
+	-2: {
+		id = -2,
+		map = "res://nodes/HUD.tscn"
+	},
 	-1: {
 		id = -1,
 		map = "res://nodes/maps/PlayerSeen.tscn",
@@ -220,7 +225,7 @@ var disconnectibles = {
 }
 
 func _ready():
-	last_entrance = entrances[0]
+	last_entrance = entrances[-2]
 
 # Call it when the player has been seen by a guard. It will display a loosing screen
 func player_seen():

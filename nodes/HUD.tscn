@@ -1,0 +1,160 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://fonts/big.tres" type="DynamicFont" id=1]
+[ext_resource path="res://fonts/Silver.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://texture/prototype.png" type="Texture" id=3]
+[ext_resource path="res://scripts/HUD.gd" type="Script" id=4]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 3 )
+region = Rect2( 704, 304, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 3 )
+region = Rect2( 560, 288, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 3 )
+region = Rect2( 640, 304, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 3 )
+region = Rect2( 608, 288, 16, 16 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 24
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_space = 1
+font_data = ExtResource( 2 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 3 )
+region = Rect2( 352, 320, 16, 16 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 32
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 1
+font_data = ExtResource( 2 )
+
+[node name="CenterContainer" type="CenterContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+self_modulate = Color( 0.258824, 0.258824, 0.258824, 1 )
+margin_left = 512.0
+margin_top = 300.0
+margin_right = 512.0
+margin_bottom = 300.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 343.0
+margin_top = 207.0
+margin_right = 681.0
+margin_bottom = 392.0
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_right = 338.0
+margin_bottom = 72.0
+custom_fonts/font = ExtResource( 1 )
+text = "CONTROLS"
+align = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 76.0
+margin_right = 338.0
+margin_bottom = 144.0
+custom_constants/separation = 32
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+margin_left = 32.0
+margin_right = 98.0
+margin_bottom = 68.0
+alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_right = 66.0
+margin_bottom = 36.0
+columns = 3
+
+[node name="TextureRect1" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/GridContainer"]
+margin_right = 16.0
+margin_bottom = 16.0
+
+[node name="TextureRect2" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/GridContainer"]
+margin_left = 20.0
+margin_right = 36.0
+margin_bottom = 16.0
+texture = SubResource( 1 )
+
+[node name="TextureRect3" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/GridContainer"]
+margin_left = 40.0
+margin_right = 56.0
+margin_bottom = 16.0
+
+[node name="TextureRect4" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/GridContainer"]
+margin_top = 20.0
+margin_right = 16.0
+margin_bottom = 36.0
+texture = SubResource( 2 )
+
+[node name="TextureRect5" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/GridContainer"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 36.0
+margin_bottom = 36.0
+texture = SubResource( 3 )
+
+[node name="TextureRect6" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/GridContainer"]
+margin_left = 40.0
+margin_top = 20.0
+margin_right = 56.0
+margin_bottom = 36.0
+texture = SubResource( 4 )
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 40.0
+margin_right = 66.0
+margin_bottom = 68.0
+custom_fonts/font = SubResource( 5 )
+text = "Directions"
+align = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+margin_left = 130.0
+margin_right = 306.0
+margin_bottom = 68.0
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
+margin_right = 176.0
+margin_bottom = 36.0
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer2/AspectRatioContainer"]
+margin_left = 70.0
+margin_right = 106.0
+margin_bottom = 36.0
+texture = SubResource( 6 )
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
+margin_top = 40.0
+margin_right = 176.0
+margin_bottom = 68.0
+custom_fonts/font = SubResource( 5 )
+text = "Action / Select / Continue"
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+margin_top = 148.0
+margin_right = 338.0
+margin_bottom = 185.0
+custom_fonts/font = SubResource( 7 )
+text = "Press Continue to start the game"
+align = 1
