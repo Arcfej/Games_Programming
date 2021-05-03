@@ -200,3 +200,8 @@ func _draw():
 	draw_line(from, direction + from, Color.yellow, 1)
 	draw_line(from, direction.rotated(deg2rad(seeing_angle / 2.0)) + from, Color.yellow, 1)
 	draw_line(from, direction.rotated(-deg2rad(seeing_angle / 2.0)) + from, Color.yellow, 1)
+
+func _on_InteractiveArea_body_entered(body):
+	if body is NoiseMaker:
+		# Disable the alarm that attracted the guard
+		body.disable()

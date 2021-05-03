@@ -60,3 +60,5 @@ collision_mask = 524288
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractiveArea"]
 position = Vector2( 0, -1 )
 shape = SubResource( 4 )
+
+[connection signal="body_entered" from="InteractiveArea" to="." method="_on_InteractiveArea_body_entered"]
